@@ -1,0 +1,39 @@
+`██████╗ ███████╗███████╗████████╗██████╗ ██╗      █████╗ ██╗   ██╗███████╗██████╗
+ ██╔══██╗██╔════╝██╔════╝╚══██╔══╝██╔══██╗██║     ██╔══██╗╚██╗ ██╔╝██╔════╝██╔══██╗
+ ██████╔╝█████╗  ███████╗   ██║   ██████╔╝██║     ███████║ ╚████╔╝ █████╗  ██████╔╝
+ ██╔══██╗██╔══╝  ╚════██║   ██║   ██╔═══╝ ██║     ██╔══██║  ╚██╔╝  ██╔══╝  ██╔══██╗
+ ██║  ██║███████╗███████║   ██║   ██║     ███████╗██║  ██║   ██║   ███████╗██║  ██║
+ ╚═╝  ╚═╝╚══════╝╚══════╝   ╚═╝   ╚═╝     ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝`
+
+
+An seemless http remote player.
+
+Pre-requisites:
+
+python-vlc flask
+
+sudo pip pyhon-vlc flask 
+
+## Why ?
+
+How do you play music on your raspberry pi without controlling it ?
+That is the question that we searched for.
+The MDP (http://mpd.wikia.com/wiki/Clients#Web_Clients)
+is an alternative, but it requires too many stuff to work.
+Also controlling VLC via remote desktop, using command line
+tools via SSH or installing a XMBC is, or too complicated for daily use,
+or an overkill solution.
+This question  http://superuser.com/questions/138574/controlling-music-player-from-web
+have some answers, but all of them need an workaround or the instalation and configuration.
+
+## What we want to do ?
+
+Install one package and be able to play music (and maybe video) from local files and URLs.
+Addicionally, add new media files may be added.
+
+How we want to do ?
+Providing a RESTful interface for playing, pause, stoping and all other player related actions,
+altogether with the upload of files and configuration issues.
+For the backend we will use the vlc bindings for python and the flask for the framework.
+We will also provide a html5 player for remote control using just a browser.
+
