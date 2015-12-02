@@ -22,7 +22,7 @@ def stop(entry):
     current_player = None
 
 @app.route('/play')
-def start(entry):
+def play(entry):
     current_player.play()
 
 
