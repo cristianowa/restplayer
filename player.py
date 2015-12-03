@@ -39,7 +39,7 @@ class Player:
 
     def play(self):
         if self.player is not None:
-            self.player
+            self.player.play()
 
     def stop(self):
         self.player.stop()
