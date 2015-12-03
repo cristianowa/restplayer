@@ -1,8 +1,6 @@
 import os
 from vlc import  MediaPlayer
-
-x = MediaPlayer("teste")
-x.
+NOTFOUND = "Not Found"
 
 class Player:
     def __init__(self, dirs=[]):
@@ -20,6 +18,14 @@ class Player:
 
     def del_directory(self, entry):
         self.dirs.remove(entry)
+
+    def get_directory(self, entry=None):
+        if entry == None:
+            return self.dirs
+        if entry in self.dirs:
+            return entry
+        return NOTFOUND
+
 
     def pause(self):
         if self.player is not None:

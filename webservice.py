@@ -1,16 +1,14 @@
 from flask import Flask,jsonify,abort
 from flask.ext.restful.representations.json import output_json
-
+from player import Player, NOTFOUND
 app = Flask(__name__)
-current_player = None
+current_player = Player()
 
 
 
 @app.route('player/start/<entry>')
 def start(entry):
-    global  current_player
-    current_player = MediaPlayer(entry)
-    current_player.play()
+    current_player.start(entry)
     return 201
 
 @app.route('player/pause')
@@ -23,7 +21,6 @@ def pause(entry):
 def stop(entry):
     global  current_player
     current_player.stop()
-    current_player = None
     return 201
 
 @app.route('player/play')
@@ -44,21 +41,23 @@ def directories_delete():
 
 @app.route('config/directory',methods=["GET"])
 def directories_get():
-    #TODO
-    return 201
+    return str(current_player.get_directory()), 201
 
 @app.route('config/directory/<entry>',methods=["PUT"])
 def directory_put(entry):
-    #TODO append directory on player dir list
+    current_player.add_directory(entry)
     return 201
 
 @app.route('config/directory/<entry>',methods=["GET"])
 def directory_get(entry):
-    #TODO list entry if in on player dir list
-    return 201
+    output = current_player.get_directory(entry)
+    if output == NOTFOUND:
+        return NOTFOUND, 404
+    return output, 201
 
-@app.route('config/directory/<entry>',methods=["PUT"])
-def directory_put(entry):
+@app.route('config/directory/<entry>',methods=["DELETE"])
+def directory_delete(entry):
+    current_player.del_directory(entry)
     return 201
 
 if __name__ == '__main__':
