@@ -36,3 +36,7 @@ Providing a RESTful interface for playing, pause, stoping and all other player r
 altogether with the upload of files and configuration issues.
 For the backend we will use the vlc bindings for python and the flask for the framework.
 We will also provide a html5 player for remote control using just a browser.
+
+## Test Music
+
+Thanks to the folks of http://freemusicarchive.org/curator/Creative_Commons/ for providing free music for our testing!
