@@ -6,6 +6,12 @@ class Player:
     def __init__(self, dirs=[]):
         assert(isinstance(dirs, list) == True)
         self.dirs = dirs
+        self.player = None
+
+    def __del__(self):
+        if self.player is not None:
+            self.player.stop()
+
 
     def found_entry(self, entry):
         for directory in self.dirs:
@@ -40,7 +46,7 @@ class Player:
 
     def start(self, name, play=True):
         if self.player != None:
-            del self.player
+            self.player = None
         self.player = MediaPlayer(self.found_entry(name))
         if play:
             self.play()
