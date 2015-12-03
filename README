@@ -37,6 +37,11 @@ altogether with the upload of files and configuration issues.
 For the backend we will use the vlc bindings for python and the flask for the framework.
 We will also provide a html5 player for remote control using just a browser.
 
-## Test Music
+## Thanks
 
+### Test Music
 Thanks to the folks of http://freemusicarchive.org/curator/Creative_Commons/ for providing free music for our testing!
+
+### SVG Grahics
+
+Thanks to the graphics made available in http://www.opengraphicdesign.com/flash/music-player-and-sound-icons/ used for the website.
