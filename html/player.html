@@ -5,26 +5,38 @@ RestPlayer
 </head>
 <body>
 <div>
-<a href=PLAYURL>
-  <img src="play.svg" alt="play" >
-</a>
-<a href=STOPURL>
-  <img src="stop.svg" alt="stop" >
-</a>
-<a href=PAUSEURL>
-  <img src="pause.svg" alt="pause" >
-</a>
+<div style="display: inline"><form action=PLAYURL method="put">
+	<button style="display:inline" type="submit" name="play">
+	<img src="play.svg" />
+	</button>
+</form></div>
+<div style="display: inline"><form action=STOPURL method="put">
+	<button style="display:inline" type="submit" name="stop">
+	<img src="stop.svg" />
+	</button>
+</form></div>
+<div style="display: inline"><form action=PAUSEURL method="put">
+	<button style="display:inline" type="submit" name="pause">
+	<img src="pause.svg" />
+	</button>
+</form></div>
 </div>
 <div>
-<a href=NEXTURL>
-  <img src="next.svg" alt="next" >
-</a>
-<a href=PREVIUSURL>
-  <img src="previus.svg" alt="previus">
-</a>
-<a href=INSERTURL>
-  <img src="insert.svg" alt="insert">
-</a>
+<div style="display: inline"><form action=NEXTURL method="put">
+	<button style="display:inline" type="submit" name="next">
+	<img src="next.svg" />
+	</button>
+</form></div>
+<div style="display: inline"><form action=PREVIUSURL method="put">
+	<button style="display:inline" type="submit" name="previus">
+	<img src="previus.svg" />
+	</button>
+</form></div>
+<div style="display: inline"><form action=INSERTURL method="put">
+	<button style="display:inline" type="submit" name="insert">
+	<img src="insert.svg" />
+	</button>
+</form></div>
 </div>
 
 </body>
