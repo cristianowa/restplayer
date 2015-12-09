@@ -9,6 +9,7 @@ class Player:
         self.dirs = dirs
         self.add_directory(config.url_location)
         self.add_directory(config.playlist_location)
+        self.add_directory(config.uploaded_location)
         self.player = None
 
     def __del__(self):
@@ -17,6 +18,8 @@ class Player:
 
 
     def found_entry(self, entry):
+        if entry.rsplit(".",1)[1] == "url":
+            return open(os.path.join(config.url_location, entry)).read()
         for directory in self.dirs:
             if entry in os.listdir(directory):
                 return os.path.join(directory, entry)
