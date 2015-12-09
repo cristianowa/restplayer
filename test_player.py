@@ -1,6 +1,7 @@
 from unittest import TestCase
 from player import  Player
 import time
+import vlc
 
 class TestPlayer(TestCase):
   def test_found_entry(self):
@@ -59,4 +60,19 @@ class TestPlayer(TestCase):
     player = Player()
     player.add_directory("./test_files/")
     player.start("DOt_-_05_-_IMF.mp3", play=False)
+    self.assertTrue(True)
+
+  def test_start_playlist(self):
+    player = Player()
+    player.add_directory("./test_files/")
+    player.start(["Kriss_-_03_-_jazz_club.mp3","DOt_-_05_-_IMF.mp3" ])
+    time.sleep(4)#take a bit to start
+    self.assertTrue(isinstance(player.player, vlc.MediaListPlayer))
+
+  def test_next(self):
+    player = Player()
+    player.add_directory("./test_files/")
+    player.start(["Kriss_-_03_-_jazz_club.mp3","DOt_-_05_-_IMF.mp3" ])
+    time.sleep(4)#take a bit to start
+    player.next()
     self.assertTrue(True)
