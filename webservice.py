@@ -17,19 +17,19 @@ def start(entry):
     return redirect("/")
 
 @app.route('/player/pause')
-def pause(entry):
+def pause():
     global  current_player
     current_player.pause()
     return redirect("/")
 
 @app.route('/player/stop')
-def stop(entry):
+def stop():
     global  current_player
     current_player.stop()
     return redirect("/")
 
 @app.route('/player/play')
-def play(entry):
+def play():
     global  current_player
     current_player.play()
     return redirect("/")

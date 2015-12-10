@@ -18,8 +18,8 @@ class Player:
 
 
     def found_entry(self, entry):
-        if entry.rsplit(".",1)[1] == "url":
-            return open(os.path.join(config.url_location, entry)).read()
+        if entry.rsplit(".", 1)[1] == "url":
+            return open(os.path.join(config.url_location, entry)).read().strip("\n")
         for directory in self.dirs:
             if entry in os.listdir(directory):
                 return os.path.join(directory, entry)
@@ -56,9 +56,11 @@ class Player:
 
     def start(self, name, play=True):
         if self.player != None:
+            self.player.stop()
             self.player = None
-        if isinstance(name, str):
-            self.player = MediaPlayer(self.found_entry(name))
+        if isinstance(name, str) or isinstance(name, unicode):
+            print str(self.found_entry(name))
+            self.player = MediaPlayer(str(self.found_entry(name)))
         elif isinstance(name, list):
             playlist = MediaList()
             for entry in name:
