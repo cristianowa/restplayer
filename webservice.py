@@ -35,6 +35,17 @@ def play():
     current_player.play()
     return redirect("/")
 
+@app.route('/player/next')
+def next():
+    global  current_player
+    current_player.next()
+    return redirect("/")
+
+@app.route('/player/prev')
+def prev():
+    global  current_player
+    return redirect("/")
+
 @app.route('/control/directory',methods=["PUT"])
 def directories_put():
 #FOR now, directories can't be set as a collection
@@ -106,6 +117,23 @@ def uploadplaylist():
     </form>
     ''', 201
 
+@app.route('/upload/music/', methods=["POST","GET"])
+def uploadmusic():
+    if request.method == 'POST':
+        file = request.files['file']
+        if file and file.filename.rsplit(".", 1)[1] is "m3u":
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(config.uploaded_location, filename))
+            return redirect("/")
+    return '''
+    <!doctype html>
+    <title>Upload new Playlist</title>
+    <h1>Upload new Playlist</h1>
+    <form action="" method=post enctype=multipart/form-data>
+      <p><input type=file name=file>
+         <input type=submit value=Upload>
+    </form>
+    ''', 201
 
 
 @app.route("/map/", methods=['POST','GET'])

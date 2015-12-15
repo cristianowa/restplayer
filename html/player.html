@@ -1,42 +1,74 @@
 <head>
-<title>
-RestPlayer
-</title>
+    <title>
+        RestPlayer
+    </title>
+    <style>
+        body {
+            background-color: lightgrey;
+        }
+
+        h1 {
+            color: blue;
+        }
+
+        .button {
+            font: menu;
+            color: ButtonText;
+            display: inline-block;
+            width: 110px;
+            height: 110px;
+        }
+
+        .image {
+            width: 96px;
+            height: 96px;
+        }
+    </style>
 </head>
 <body>
 <div>
-<div style="display: inline"><form action=PLAYURL method="put">
-	<button style="display:inline" type="submit" name="play">
-	<img src="play.svg" />
-	</button>
-</form></div>
-<div style="display: inline"><form action=STOPURL method="put">
-	<button style="display:inline" type="submit" name="stop">
-	<img src="stop.svg" />
-	</button>
-</form></div>
-<div style="display: inline"><form action=PAUSEURL method="put">
-	<button style="display:inline" type="submit" name="pause">
-	<img src="pause.svg" />
-	</button>
-</form></div>
-</div>
-<div>
-<div style="display: inline"><form action=NEXTURL method="put">
-	<button style="display:inline" type="submit" name="next">
-	<img src="next.svg" />
-	</button>
-</form></div>
-<div style="display: inline"><form action=PREVIUSURL method="put">
-	<button style="display:inline" type="submit" name="previus">
-	<img src="previus.svg" />
-	</button>
-</form></div>
-<div style="display: inline"><form action=INSERTURL method="put">
-	<button style="display:inline" type="submit" name="insert">
-	<img src="insert.svg" />
-	</button>
-</form></div>
+    <div class="button">
+        <form action=/player/prev method="put">
+            <button type="submit" name="previus">
+                <img class="image" src="previus.svg"/>
+            </button>
+        </form>
+    </div>
+    <div class="button">
+        <form action=/player/play method="put">
+            <button type="submit" name="play">
+                <img class="image" src="play.svg"/>
+            </button>
+        </form>
+    </div>
+    <div class="button">
+        <form action=/player/pause method="put">
+            <button type="submit" name="pause">
+                <img class="image" src="pause.svg"/>
+            </button>
+        </form>
+    </div>
+    <div class="button">
+        <form action=/player/next method="put">
+            <button type="submit" name="next">
+                <img class="image" src="next.svg"/>
+            </button>
+        </form>
+    </div>
+    <div class="button">
+        <form action=/player/insert method="put">
+            <button type="submit" name="insert">
+                <img class="image" src="insert.svg"/>
+            </button>
+        </form>
+    </div>
+    <div class="button">
+        <form action=STOPURL method="put">
+            <button type="submit" name="stop">
+                <img class="image" src="stop.svg"/>
+            </button>
+        </form>
+    </div>
 </div>
 
 </body>
