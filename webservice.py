@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import os
 from flask import Flask, jsonify, abort, request, send_from_directory, redirect
 from flask.ext.restful.representations.json import output_json
