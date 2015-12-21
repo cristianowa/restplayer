@@ -29,6 +29,12 @@ def stage():
     global staged
     return redirect("/")
 
+@app.route('/stage/save')
+def stage_save():
+    global staged
+    return redirect("/")
+
+
 @app.route('/stage.json')
 def stage_json():
     global staged
@@ -163,14 +169,25 @@ def uploadmusic():
             return redirect("/")
     return '''
     <!doctype html>
-    <title>Upload new Playlist</title>
-    <h1>Upload new Playlist</h1>
+    <title>Upload new Music</title>
+    <h1>Upload new Music File</h1>
     <form action="" method=post enctype=multipart/form-data>
       <p><input type=file name=file>
          <input type=submit value=Upload>
     </form>
     ''', 201
 
+@app.route("/volume/up")
+def volume_up():
+    return redirect("/")
+
+@app.route("/volume/down")
+def volume_down():
+    return redirect("/")
+
+@app.route("/volume/off")
+def volume_off():
+    return redirect("/")
 
 @app.route("/map/", methods=['POST','GET'])
 def site_map():

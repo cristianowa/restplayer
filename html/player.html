@@ -2,6 +2,8 @@
     <title>
         RestPlayer
     </title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
     <script src="d3.min.js"></script>
     <style>
         body {
@@ -93,13 +95,38 @@
             </form>
         </div>
         <div class="button">
-            <form action=STOPURL method="put">
+            <form action=/player/stop method="put">
                 <button type="submit" name="stop">
                     <img class="image" src="stop.svg"/>
                 </button>
             </form>
         </div>
     </div>
+    <div>
+        <a href="/upload/music/" target="_blank">
+            <i class="fa fa-file-audio-o fa-3x" title="Upload audio"></i>
+        </a>
+        <a href="/upload/directory/" target="_blank">
+            <i class="fa fa-folder-open-o fa-3x" title="Add new directory"></i>
+        </a>
+        <a href="/upload/music/" target="_blank">
+            <i class="fa fa-bars fa-3x" title="Upload new playlist"></i>
+        </a>
+        <a href="/stage/save/" target="_blank">
+            <i class="fa fa-save fa-3x" title="Save queue to playlist"></i>
+        </a>
+        <a href="/volume/down">
+            <i class="fa fa-volume-down fa-3x" title="Volume down"></i>
+        </a>
+        <a href="/volume/up">
+            <i class="fa fa-volume-up fa-3x" title="Volume up"></i>
+        </a>
+        <a href="/volume/off">
+            <i class="fa fa-volume-off fa-3x" title="Volume off"></i>
+        </a>
+    </div>
+
+
     <div>
         <p>
             <iframe src=queue.html width="680" height="150"></iframe>
