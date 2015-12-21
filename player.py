@@ -25,6 +25,7 @@ class Player:
         for directory in self.dirs:
             if entry in os.listdir(directory):
                 return os.path.join(directory, entry)
+        return None
 
     def list_available(self):
         ret = []
@@ -43,7 +44,7 @@ class Player:
             try:
                 for entry in os.listdir(directory):
                     if entry.rsplit(".", 1)[1] in ["url", "mp3", "wma", "wav", "m3u"]:
-                        fullname = os.path.relpath(os.path.join(directory, entry[:entry.rfind(".")]), config.base_dir)
+                        fullname = os.path.relpath(os.path.join(directory, entry), config.base_dir)
                         if d is None:
                             d = Nestedict(fullname, 1)
                         else:

@@ -1,20 +1,46 @@
 #!/usr/bin/python
 import os
+from difflib import ndiff
+
 from flask import Flask, jsonify, abort, request, send_from_directory, redirect
 from flask.ext.restful.representations.json import output_json
 from werkzeug import secure_filename
+from nestedict import Nestedict
+
 
 from player import Player, NOTFOUND
 import config
 import url
 app = Flask(__name__,static_folder='html/')
+
 current_player = Player()
+staged = []
 
+@app.route('/stage/add/<entry>')
+def stage_add(entry):
+    global staged
+    global current_player
+    if current_player.found_entry(str(entry)) is not None:
+        staged.append(entry)
+    return redirect("/available.html")
 
+@app.route('/stage')
+def stage():
+    global staged
+    return redirect("/")
 
-@app.route('/player/start/<entry>')
-def start(entry):
-    current_player.start(entry)
+@app.route('/stage.json')
+def stage_json():
+    global staged
+    ndict = Nestedict("Playing Queue",1)
+    for entry in staged:
+        ndict.add_node("Playing Queue/" + str(entry), 1)
+    return jsonify(dict(ndict))
+
+@app.route('/player/insert')
+def start():
+    global staged
+    current_player.start(staged)
     return redirect("/")
 
 @app.route('/player/pause')
@@ -36,7 +62,7 @@ def play():
     return redirect("/")
 
 @app.route('/player/next')
-def next():
+def next_():
     global  current_player
     current_player.next()
     return redirect("/")
