@@ -1,13 +1,13 @@
 children = "children"
 name = "name"
 value = "value"
+
 class Nestedict(dict):
-    delimiter = "/"
-    def __init__(self, nome, val):
+    def __init__(self, nome, val, delimiter="/"):
         super(dict, self).__init__()
         self[children] = []
         self.add_node(nome, val)
-
+        self.delimiter = delimiter
         #self[name] = name
     def add_node(self, nome, val):
         address = nome.split(self.delimiter)

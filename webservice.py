@@ -51,6 +51,11 @@ def available():
     global current_player
     return str(current_player.list_available()), 201
 
+@app.route('/player/available.json')
+def available_json():
+    global current_player
+    return jsonify(current_player.list_available_nested_dict()), 201
+
 @app.route('/control/directory',methods=["PUT"])
 def directories_put():
 #FOR now, directories can't be set as a collection
