@@ -46,6 +46,11 @@ def prev():
     global  current_player
     return redirect("/")
 
+@app.route('/player/available')
+def available():
+    global current_player
+    return str(current_player.list_available()), 201
+
 @app.route('/control/directory',methods=["PUT"])
 def directories_put():
 #FOR now, directories can't be set as a collection
