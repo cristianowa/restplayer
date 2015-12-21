@@ -1,16 +1,19 @@
 
 home_dir = None
-url_location = ".restplayer/url"
-playlist_location = ".restplayer/playlists"
-uploaded_location = ".restplayer/uploaded"
+base_dir = None
+url_location = "url"
+playlist_location = "playlists"
+uploaded_location = "uploaded"
 
 
 import os
 if home_dir is None:
     home_dir = os.environ["HOME"]
-url_location = os.path.join(home_dir, url_location)
-playlist_location = os.path.join(home_dir, playlist_location)
-uploaded_location = os.path.join(home_dir, uploaded_location)
+if base_dir is None:
+    base_dir = os.path.join(home_dir, ".restplayer")
+url_location = os.path.join(base_dir, url_location)
+playlist_location = os.path.join(base_dir, playlist_location)
+uploaded_location = os.path.join(base_dir, uploaded_location)
 
 import shutil
 def __setup__():

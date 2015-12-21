@@ -1,4 +1,6 @@
 import os
+from nestedict import  Nestedict
+
 from vlc import  MediaPlayer, MediaListPlayer, MediaList
 import config
 NOTFOUND = "Not Found"
@@ -23,6 +25,33 @@ class Player:
         for directory in self.dirs:
             if entry in os.listdir(directory):
                 return os.path.join(directory, entry)
+
+    def list_available(self):
+        ret = []
+        for directory in self.dirs:
+            try:
+                for entry in os.listdir(directory):
+                    if entry.rsplit(".", 1)[1] in ["url", "mp3", "wma", "wav", "m3u"]:
+                        ret.append(entry)
+            except OSError:#missing directories are not a problem
+                pass
+            return ret
+
+    def list_available_nested_dict(self):
+        d = None
+        for directory in self.dirs:
+            try:
+                for entry in os.listdir(directory):
+                    print entry
+                    if entry.rsplit(".", 1)[1] in ["url", "mp3", "wma", "wav", "m3u"]:
+                        fullname = os.path.relpath(os.path.join(directory, entry[:entry.rfind(".")]), config.base_dir)
+                        if d is None:
+                            d = Nestedict(fullname, 1)
+                        else:
+                            d.add_node(fullname, 1)
+            except OSError:#missing directories are not a problem
+                pass
+        return d
 
     def add_directory(self, entry):
         if entry not in self.dirs:
@@ -69,3 +98,7 @@ class Player:
             self.player.set_media_list(playlist)
         if play:
             self.play()
+
+if __name__ == '__main__':
+    p = Player()
+    print p.list_available_nested_dict()

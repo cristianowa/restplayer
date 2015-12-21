@@ -76,3 +76,16 @@ class TestPlayer(TestCase):
     time.sleep(4)#take a bit to start
     player.next()
     self.assertTrue(True)
+
+  def test_available(self):
+    player = Player()
+    self.assertTrue(isinstance(player.list_available(), list))
+
+  def test_available_dict(self):
+    player = Player()
+    json = dict(player.list_available_nested_dict())
+    self.assertTrue(isinstance(json, dict))
+
+import HTMLTestRunner
+if __name__ == '__main__':
+  HTMLTestRunner.main()
