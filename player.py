@@ -42,7 +42,6 @@ class Player:
         for directory in self.dirs:
             try:
                 for entry in os.listdir(directory):
-                    print entry
                     if entry.rsplit(".", 1)[1] in ["url", "mp3", "wma", "wav", "m3u"]:
                         fullname = os.path.relpath(os.path.join(directory, entry[:entry.rfind(".")]), config.base_dir)
                         if d is None:
