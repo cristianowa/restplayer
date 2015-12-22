@@ -58,76 +58,71 @@
 </head>
 <body>
 <div class="center">
-    <div>
-        <div class="button">
-            <form action=/player/prev method="put">
-                <button type="submit" name="previus">
-                    <img class="image" src="previus.svg"/>
-                </button>
-            </form>
-        </div>
-        <div class="button">
-            <form action=/player/play method="put">
-                <button type="submit" name="play">
-                    <img class="image" src="play.svg"/>
-                </button>
-            </form>
-        </div>
-        <div class="button">
-            <form action=/player/pause method="put">
-                <button type="submit" name="pause">
-                    <img class="image" src="pause.svg"/>
-                </button>
-            </form>
-        </div>
-        <div class="button">
-            <form action=/player/next method="put">
-                <button type="submit" name="next">
-                    <img class="image" src="next.svg"/>
-                </button>
-            </form>
-        </div>
-        <div class="button">
-            <form action=/player/insert method="put">
-                <button type="submit" name="insert">
-                    <img class="image" src="insert.svg"/>
-                </button>
-            </form>
-        </div>
-        <div class="button">
-            <form action=/player/stop method="put">
-                <button type="submit" name="stop">
-                    <img class="image" src="stop.svg"/>
-                </button>
-            </form>
-        </div>
-    </div>
-    <div>
+    <p>
+        <form action=/player/prev method="put" style="display: inline;">
+            <button class="btn large" title="Previus" type="submit" name="previus">
+                <i class="fa fa-backward fa-5x"/> </i> </button>
+        </form>
 
+        <form action=/player/play method="put" style="display: inline;">
+            <button class="btn large" title="Play" type="submit" name="play">
+                <i class="fa fa-play fa-5x"/> </i> </button>
+            </button>
+        </form>
+
+        <form action=/player/pause method="put" style="display: inline;">
+            <button class="btn large" title="Pause" type="submit" name="pause">
+                <i class="fa fa-pause fa-5x"/> </i> </button>
+            </button>
+        </form>
+
+        <form action=/player/next method="put" style="display: inline;">
+            <button class="btn btn-large" title="Next" type="submit" name="next">
+                <i class="fa fa-forward fa-5x"/> </i> </button>
+            </button>
+        </form>
+
+        <form action=/player/insert method="put" style="display: inline;">
+            <button class="btn btn-large" title="Open" type="submit" name="insert">
+                <i class="fa fa-eject fa-5x"/> </i> </button>
+            </button>
+        </form>
+
+        <form action=/player/stop method="put" style="display: inline;">
+            <button class="btn btn-large" title="Stop" type="submit" name="stop">
+                <i class="fa fa-stop fa-5x"/> </i> </button>
+            </button>
+        </form>
+    </p>
+<div>
         <a href="/upload/music/" target="_blank">
-
-            <i class="fa fa-file-audio-o fa-3x" title="Upload audio"></i>
+            <i class="fa fa-cloud-upload fa-3x" title="Upload audio"></i>
         </a>
-            <a href="/control/directory/" target="_blank">
-            <i class="fa fa-folder-open-o fa-3x" title="Add new directory"></i>
+
+        <a href="/control/directory/" target="_blank">
+            <i class="fa fa-folder fa-3x" title="Add new directory"></i>
         </a>
 
         <a href="/upload/music/" target="_blank">
-            <i class="fa fa-bars fa-3x" title="Upload new playlist"></i>
+            <i class="fa fa-list fa-3x" title="Upload new playlist"></i>
         </a>
+
         <a href="/stage/save/" target="_blank">
             <i class="fa fa-save fa-3x" title="Save queue to playlist"></i>
         </a>
+
         <a href="/volume/down">
             <i class="fa fa-volume-down fa-3x" title="Volume down"></i>
         </a>
+
         <a href="/volume/up">
             <i class="fa fa-volume-up fa-3x" title="Volume up"></i>
         </a>
+
         <a href="/volume/off">
             <i class="fa fa-volume-off fa-3x" title="Volume off"></i>
         </a>
-    </div>
+</div>
 
 
     <div>
