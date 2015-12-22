@@ -1,4 +1,5 @@
 import os
+import shelve
 from nestedict import  Nestedict
 
 from vlc import  MediaPlayer, MediaListPlayer, MediaList
@@ -18,13 +19,26 @@ class Player:
         if self.player is not None:
             self.player.stop()
 
+    def load_directories(self):
+        d = shelve.open(config.player_persistance)
+        for dr in d["dirs"]:
+            self.add_directory(dr)
+        d.close()
+    def save_directories(self):
+        d = shelve.open(config.player_persistance)
+        d["dirs"] = self.get_directory()
+        d.sync()
+        d.close()
 
     def found_entry(self, entry):
-        if entry.rsplit(".", 1)[1] == "url":
-            return open(os.path.join(config.url_location, entry)).read().strip("\n")
-        for directory in self.dirs:
-            if entry in os.listdir(directory):
-                return os.path.join(directory, entry)
+        try:
+            if entry.rsplit(".", 1)[1] == "url":
+                return open(os.path.join(config.url_location, entry)).read().strip("\n")
+            for directory in self.dirs:
+                if entry in os.listdir(directory):
+                    return os.path.join(directory, entry)
+        except:
+            return None
         return None
 
     def list_available(self):
@@ -44,11 +58,12 @@ class Player:
             try:
                 for entry in os.listdir(directory):
                     if entry.rsplit(".", 1)[1] in ["url", "mp3", "wma", "wav", "m3u"]:
-                        fullname = os.path.relpath(os.path.join(directory, entry), config.base_dir)
+                        path = os.path.split(directory)[1]
+                        fullname = "/".join([path, entry])
                         if d is None:
-                            d = Nestedict(fullname, 1)
-                        else:
-                            d.add_node(fullname, 1)
+                            d = Nestedict("all", 1)
+                        print "Adding: " + "all/" + fullname
+                        d.add_node("all/" + fullname, 1)
             except OSError:#missing directories are not a problem
                 pass
         return d
@@ -56,6 +71,7 @@ class Player:
     def add_directory(self, entry):
         if entry not in self.dirs:
             self.dirs.append(entry)
+        self.save_directories()
 
     def del_directory(self, entry):
         self.dirs.remove(entry)
@@ -98,7 +114,3 @@ class Player:
             self.player.set_media_list(playlist)
         if play:
             self.play()
-
-if __name__ == '__main__':
-    p = Player()
-    print p.list_available_nested_dict()

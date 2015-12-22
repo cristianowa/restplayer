@@ -78,7 +78,7 @@ def prev():
     global  current_player
     return redirect("/")
 
-@app.route('/player/available')
+@app.route('/player/available/')
 def available():
     global current_player
     return str(current_player.list_available()), 201
@@ -88,31 +88,34 @@ def available_json():
     global current_player
     return jsonify(current_player.list_available_nested_dict()), 201
 
-@app.route('/control/directory',methods=["PUT"])
-def directories_put():
-#FOR now, directories can't be set as a collection
-    abort(403)
+@app.route('/control/directory/', methods=["POST","GET","DELETE"])
+def directory():
+    global current_player
+    if request.method == "POST":
+        text = request.form['text']
+        print text
+        current_player.add_directory(text)
+        return  redirect("/")
+    elif request.method == "DELETE":
+        text = request.form['text']
+        current_player.del_directory(text)
+        return  redirect("/")
+    elif request.method == "GET":
+        return '''
+    <!doctype html>
+    <title>Add New Directory</title>
+    <h1>Add New Directory</h1>
+    <form action="/control/directory/" method=post>
+      <p><input type=text name=text>
+         <input type=submit value=Send>
+    </form>
+    '''
+    else:
+        print "UPS" \
+              ""
+        abort(400)
 
-@app.route('/control/directory',methods=["DELETE"])
-def directories_delete():
-#FOR now, directories can't be set as a collection
-    abort(403)
 
-@app.route('/control/directory',methods=["GET"])
-def directories_get():
-    return str(current_player.get_directory()), 201
-
-@app.route('/control/directory/<entry>',methods=["PUT"])
-def directory_put(entry):
-    current_player.add_directory(entry)
-    return redirect("/")
-
-@app.route('/control/directory/<entry>',methods=["GET"])
-def directory_get(entry):
-    output = current_player.get_directory(entry)
-    if output == NOTFOUND:
-        return NOTFOUND, 404
-    return redirect("/")
 
 @app.route('/control/createurl/', methods=["POST", "GET"])
 @app.route('/control/createurl/<entry>', methods=["POST", "GET"])
@@ -135,11 +138,6 @@ def createurl(entry=None):
     </form>
     ''', 201
 
-
-@app.route('/config/directory/<entry>',methods=["DELETE"])
-def directory_delete(entry):
-    current_player.del_directory(entry)
-    return 201
 
 @app.route('/upload/playlist/', methods=["POST","GET"])
 def uploadplaylist():

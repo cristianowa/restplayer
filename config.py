@@ -4,7 +4,7 @@ base_dir = None
 url_location = "url"
 playlist_location = "playlists"
 uploaded_location = "uploaded"
-
+player_persistance = "persistance.shelve"
 
 import os
 if home_dir is None:
@@ -14,7 +14,7 @@ if base_dir is None:
 url_location = os.path.join(base_dir, url_location)
 playlist_location = os.path.join(base_dir, playlist_location)
 uploaded_location = os.path.join(base_dir, uploaded_location)
-
+player_persistance = os.path.join(base_dir, player_persistance)
 import shutil
 def __setup__():
     try:
