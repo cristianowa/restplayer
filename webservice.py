@@ -180,6 +180,8 @@ def volume_up():
     m = alsaaudio.Mixer()
     m.setmute(0)
     vol = m.getvolume()[0]
+    if vol+5 > 100:
+        vol = 95
     m.setvolume(vol+5)
     return redirect("/")
 
@@ -187,6 +189,8 @@ def volume_up():
 def volume_down():
     m = alsaaudio.Mixer()
     vol = m.getvolume()[0]
+    if vol-5 < 0:
+        vol = 5
     m.setvolume(vol-5)
     return redirect("/")
 
