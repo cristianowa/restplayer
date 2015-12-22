@@ -22,6 +22,8 @@ class Player:
             self.player.stop()
 
     def load_directories(self):
+        if not os.path.exists(config.player_persistance):
+            return
         d = shelve.open(config.player_persistance)
         for dr in d["dirs"]:
             self.add_directory(dr)
