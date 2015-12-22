@@ -22,4 +22,5 @@ class Nestedict(dict):
                 if len(address) > 1 and child[name] == address[1]:
                     child[children].append(Nestedict(self.delimiter.join(address[2:] + [nome]), val))
                     return
-            self[children].append(Nestedict(self.delimiter.join(address[2:] + [nome]), val))
+            self[children].append(Nestedict(self.delimiter.join(address[1:] + [nome]), val))
+            self[name] = address[0]

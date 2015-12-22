@@ -12,7 +12,10 @@ Pre-requisites:
 
 python-vlc flask
 
-$ sudo pip install python-vlc flask
+$ sudo pip install python-vlc flask pyalsaaudio
+
+Debian:
+sudo apt-get install libasound2-dev
 
 ## Why ?
 

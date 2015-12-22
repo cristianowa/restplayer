@@ -6,7 +6,7 @@ from flask import Flask, jsonify, abort, request, send_from_directory, redirect
 from flask.ext.restful.representations.json import output_json
 from werkzeug import secure_filename
 from nestedict import Nestedict
-
+import alsaaudio
 
 from player import Player, NOTFOUND
 import config
@@ -177,14 +177,23 @@ def uploadmusic():
 
 @app.route("/volume/up")
 def volume_up():
+    m = alsaaudio.Mixer()
+    m.setmute(0)
+    vol = m.getvolume()[0]
+    m.setvolume(vol+5)
     return redirect("/")
 
 @app.route("/volume/down")
 def volume_down():
+    m = alsaaudio.Mixer()
+    vol = m.getvolume()[0]
+    m.setvolume(vol-5)
     return redirect("/")
 
 @app.route("/volume/off")
 def volume_off():
+    m = alsaaudio.Mixer()
+    m.setmute(1)
     return redirect("/")
 
 @app.route("/map/", methods=['POST','GET'])
