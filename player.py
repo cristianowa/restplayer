@@ -10,10 +10,12 @@ class Player:
     def __init__(self, dirs=[]):
         assert(isinstance(dirs, list) == True)
         self.dirs = dirs
+        self.load_directories()
         self.add_directory(config.url_location)
         self.add_directory(config.playlist_location)
         self.add_directory(config.uploaded_location)
         self.player = None
+
 
     def __del__(self):
         if self.player is not None:
@@ -24,6 +26,7 @@ class Player:
         for dr in d["dirs"]:
             self.add_directory(dr)
         d.close()
+
     def save_directories(self):
         d = shelve.open(config.player_persistance)
         d["dirs"] = self.get_directory()
@@ -62,15 +65,16 @@ class Player:
                         fullname = "/".join([path, entry])
                         if d is None:
                             d = Nestedict("all", 1)
-                        print "Adding: " + "all/" + fullname
                         d.add_node("all/" + fullname, 1)
             except OSError:#missing directories are not a problem
                 pass
         return d
 
     def add_directory(self, entry):
+        print "ADD DIR " + entry
         if entry not in self.dirs:
             self.dirs.append(entry)
+        self.dirs = list(set(self.dirs))
         self.save_directories()
 
     def del_directory(self, entry):
