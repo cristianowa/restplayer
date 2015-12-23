@@ -5,7 +5,7 @@ url_location = "url"
 playlist_location = "playlists"
 uploaded_location = "uploaded"
 player_persistance = "persistance.shelve"
-
+supported_extensions = ["mp3", "wma", "wav"]
 import os
 if home_dir is None:
     home_dir = os.environ["HOME"]

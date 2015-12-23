@@ -51,7 +51,8 @@ class Player:
         for directory in self.dirs:
             try:
                 for entry in os.listdir(directory):
-                    if entry.rsplit(".", 1)[1] in ["url", "mp3", "wma", "wav", "m3u"]:
+                    extensions = entry.rsplit(".", 1)
+                    if len(extensions) > 1 and extensions[0] in ["url", "m3u"] + config.supported_extensions:
                         ret.append(entry)
             except OSError:#missing directories are not a problem
                 pass
@@ -63,7 +64,7 @@ class Player:
             try:
                 for entry in os.listdir(directory):
                     try:
-                        if entry.rsplit(".", 1)[1] in ["url", "mp3", "wma", "wav", "m3u"]:
+                        if entry.rsplit(".", 1)[1] in ["url", "m3u"] + config.supported_extensions:
                             path = os.path.split(directory)[1]
                             fullname = "/".join([path, entry])
                             if d is None:
@@ -76,7 +77,6 @@ class Player:
         return d
 
     def add_directory(self, entry):
-        print "ADD DIR " + entry
         if entry not in self.dirs:
             self.dirs.append(entry)
         self.dirs = list(set(self.dirs))
@@ -113,7 +113,6 @@ class Player:
             self.player.stop()
             self.player = None
         if isinstance(name, str) or isinstance(name, unicode):
-            print str(self.found_entry(name))
             self.player = MediaPlayer(str(self.found_entry(name)))
         elif isinstance(name, list):
             playlist = MediaList()

@@ -20,7 +20,7 @@ staged = []
 def stage_add(entry):
     global staged
     global current_player
-    if current_player.found_entry(str(entry)) is not None:
+    if current_player.found_entry(unicode(entry)) is not None:
         staged.append(entry)
     return redirect("/available.html")
 
@@ -40,7 +40,7 @@ def stage_json():
     global staged
     ndict = Nestedict("Playing Queue",1)
     for entry in staged:
-        ndict.add_node("Playing Queue/" + str(entry), 1)
+        ndict.add_node("Playing Queue/" + unicode(entry), 1)
     return jsonify(dict(ndict))
 
 @app.route('/player/pause')
@@ -77,7 +77,7 @@ def prev():
 @app.route('/player/available/')
 def available():
     global current_player
-    return str(current_player.list_available()), 201
+    return unicode(current_player.list_available()), 201
 
 @app.route('/player/available.json')
 def available_json():
@@ -89,7 +89,6 @@ def directory():
     global current_player
     if request.method == "POST":
         text = request.form['text']
-        print text
         current_player.add_directory(text)
         return  redirect("/")
     elif request.method == "DELETE":
@@ -157,7 +156,7 @@ def uploadplaylist():
 def uploadmusic():
     if request.method == 'POST':
         file = request.files['file']
-        if file and file.filename.rsplit(".", 1)[1] is "m3u":
+        if file and file.filename.rsplit(".", 1)[1] in config.supported_extensions:
             filename = secure_filename(file.filename)
             file.save(os.path.join(config.uploaded_location, filename))
             return redirect("/")
