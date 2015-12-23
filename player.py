@@ -62,12 +62,15 @@ class Player:
         for directory in self.dirs:
             try:
                 for entry in os.listdir(directory):
-                    if entry.rsplit(".", 1)[1] in ["url", "mp3", "wma", "wav", "m3u"]:
-                        path = os.path.split(directory)[1]
-                        fullname = "/".join([path, entry])
-                        if d is None:
-                            d = Nestedict("all", 1)
-                        d.add_node("all/" + fullname, 1)
+                    try:
+                        if entry.rsplit(".", 1)[1] in ["url", "mp3", "wma", "wav", "m3u"]:
+                            path = os.path.split(directory)[1]
+                            fullname = "/".join([path, entry])
+                            if d is None:
+                                d = Nestedict("all", 1)
+                            d.add_node("all/" + fullname, 1)
+                    except IndexError: #files without extensions should not break this
+                        pass
             except OSError:#missing directories are not a problem
                 pass
         return d
