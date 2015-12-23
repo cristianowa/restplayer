@@ -43,12 +43,6 @@ def stage_json():
         ndict.add_node("Playing Queue/" + str(entry), 1)
     return jsonify(dict(ndict))
 
-@app.route('/player/insert')
-def start():
-    global staged
-    current_player.start(staged)
-    return redirect("/")
-
 @app.route('/player/pause')
 def pause():
     global  current_player
@@ -63,7 +57,9 @@ def stop():
 
 @app.route('/player/play')
 def play():
+    global staged
     global  current_player
+    current_player.start(staged)
     current_player.play()
     return redirect("/")
 
