@@ -35,6 +35,12 @@ def stage_save():
     global staged
     return redirect("/")
 
+@app.route('/stage/clear/')
+def stage_clear():
+    global staged
+    staged = []
+    return redirect("/")
+
 
 @app.route('/stage.json')
 def stage_json():
