@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Available 2</title>
+    <script src="jquery-1.11.3.min.js"></script>
+</head>
+<body>
+<body>
+
+</body>
+<div id="demo"></div>
+
+<script>
+//var cars = JSON.parse()
+$.getJSON( "stage", function( data ) {
+  var items = [];
+  $.each( data, function( key, val ) {
+      if (key == "queue") {
+          items = val
+      }
+  });
+    var html = ""
+  for(var i = 0; i < items.length; i++) {
+    alert(items[i]);
+    html+= "<li>" + items[i] + "</li>";
+  }
+  $( "<ul/>", {
+    "class": "my-new-list",
+    html: html
+  }).appendTo( "body" );
+});
+
+//document.getElementById("demo").innerHTML += "<ul>";
+//for (var i = 0; i < cars.length; i++) {
+ //     document.getElementById("demo").innerHTML += "<li>" + cars[i] + "</li>";
+//}
+//document.getElementById("demo").innerHTML += "</ul>";
+</script>
+</body>
+</html>

@@ -28,7 +28,7 @@ def stage_add(entry):
 @app.route('/stage')
 def stage():
     global staged
-    return redirect("/")
+    return jsonify({"queue":staged})
 
 @app.route('/stage/save/')
 def stage_save():
@@ -45,7 +45,7 @@ def stage_clear():
 @app.route('/stage.json')
 def stage_json():
     global staged
-    ndict = Nestedict("Playing Queue",1)
+    ndict = Nestedict("Playing Queue", 1)
     for entry in staged:
         ndict.add_node("Playing Queue/" + unicode(entry), 1)
     return jsonify(dict(ndict))
