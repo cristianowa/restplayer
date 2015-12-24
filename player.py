@@ -53,13 +53,16 @@ class Player:
         ret = []
         for directory in self.dirs:
             try:
-                for entry in os.listdir(directory):
-                    extensions = entry.rsplit(".", 1)
-                    if len(extensions) > 1 and extensions[0] in ["url", "m3u"] + config.supported_extensions:
-                        ret.append(entry)
+                try:
+                    for entry in os.listdir(directory):
+                        extensions = entry.rsplit(".", 1)
+                        if len(extensions) > 1 and extensions[1] in ["url", "m3u"] + config.supported_extensions:
+                            ret.append(entry)
+                except IndexError:
+                    pass
             except OSError:#missing directories are not a problem
                 pass
-            return ret
+        return ret
 
     def list_available_nested_dict(self):
         d = None
