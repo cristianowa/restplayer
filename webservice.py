@@ -15,12 +15,13 @@ app = Flask(__name__,static_folder='html/')
 
 current_player = Player()
 staged = []
-
+def sanitize(s):
+    return unicode(s)
 @app.route('/stage/add/<entry>')
 def stage_add(entry):
     global staged
     global current_player
-    if current_player.found_entry(unicode(entry)) is not None:
+    if current_player.found_entry(sanitize(entry)) is not None:
         staged.append(entry)
     return redirect("/available.html")
 
@@ -29,7 +30,7 @@ def stage():
     global staged
     return redirect("/")
 
-@app.route('/stage/save')
+@app.route('/stage/save/')
 def stage_save():
     global staged
     return redirect("/")
@@ -89,11 +90,11 @@ def directory():
     global current_player
     if request.method == "POST":
         text = request.form['text']
-        current_player.add_directory(text)
+        current_player.add_directory(sanitize(text))
         return  redirect("/")
     elif request.method == "DELETE":
         text = request.form['text']
-        current_player.del_directory(text)
+        current_player.del_directory(sanitize(text))
         return  redirect("/")
     elif request.method == "GET":
         return '''
@@ -139,7 +140,7 @@ def uploadplaylist():
     if request.method == 'POST':
         file = request.files['file']
         if file and file.filename.rsplit(".", 1)[1] is "m3u":
-            filename = secure_filename(file.filename)
+            filename = sanitize(file.filename)
             file.save(os.path.join(config.playlist_location, filename))
             return redirect("/")
     return '''
@@ -157,7 +158,7 @@ def uploadmusic():
     if request.method == 'POST':
         file = request.files['file']
         if file and file.filename.rsplit(".", 1)[1] in config.supported_extensions:
-            filename = secure_filename(file.filename)
+            filename = sanitize(file.filename)
             file.save(os.path.join(config.uploaded_location, filename))
             return redirect("/")
     return '''

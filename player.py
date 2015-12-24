@@ -40,8 +40,12 @@ class Player:
             if entry.rsplit(".", 1)[1] == "url":
                 return open(os.path.join(config.url_location, entry)).read().strip("\n")
             for directory in self.dirs:
-                if entry in os.listdir(directory):
-                    return os.path.join(directory, entry)
+                try:
+                    if entry in os.listdir(directory):
+                        print entry
+                        return os.path.join(directory, entry)
+                except OSError:
+                    pass
         except:
             return None
         return None
