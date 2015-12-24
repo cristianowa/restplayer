@@ -42,7 +42,6 @@ class Player:
             for directory in self.dirs:
                 try:
                     if entry in os.listdir(directory):
-                        print entry
                         return os.path.join(directory, entry)
                 except OSError:
                     pass
