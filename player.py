@@ -50,14 +50,16 @@ class Player:
         return None
 
     def list_available(self):
-        ret = []
+        ret = {}
         for directory in self.dirs:
             try:
                 try:
                     for entry in os.listdir(directory):
                         extensions = entry.rsplit(".", 1)
                         if len(extensions) > 1 and extensions[1] in ["url", "m3u"] + config.supported_extensions:
-                            ret.append(entry)
+                            if directory not in ret.keys():
+                                ret[directory] = []
+                            ret[directory].append(entry)
                 except IndexError:
                     pass
             except OSError:#missing directories are not a problem
@@ -118,13 +120,18 @@ class Player:
         if self.player != None:
             self.player.stop()
             self.player = None
+        self.mediaplayer = MediaPlayer()
         if isinstance(name, str) or isinstance(name, unicode):
-            self.player = MediaPlayer(str(self.found_entry(name)))
-        elif isinstance(name, list):
-            playlist = MediaList()
-            for entry in name:
-                playlist.add_media(self.found_entry(entry))
-            self.player = MediaListPlayer()
-            self.player.set_media_list(playlist)
+            name = [str(self.found_entry(name))]
+
+        playlist = MediaList()
+        for entry in name:
+            playlist.add_media(self.found_entry(entry))
+        self.player = MediaListPlayer()
+        self.player.set_media_list(playlist)
+        self.player.set_media_player(self.mediaplayer)
         if play:
             self.play()
+
+    def current(self):
+        return self.mediaplayer.get_media().get_meta(0)

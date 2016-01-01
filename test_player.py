@@ -80,7 +80,7 @@ class TestPlayer(TestCase):
 
     def test_available(self):
         player = Player()
-        self.assertTrue(isinstance(player.list_available(), list))
+        self.assertTrue(isinstance(player.list_available(), dict))
 
     def test_available_dict(self):
         player = Player()
@@ -93,7 +93,13 @@ class TestPlayer(TestCase):
         open(os.path.join(tmpdir,"test"), "w").close()
         open(os.path.join(tmpdir,"other"), "w").close()
         player.add_directory(tmpdir)
-        self.assertTrue(isinstance(player.list_available(), list))
+        self.assertTrue(isinstance(player.list_available(), dict))
 
+    def test_current(self):
+        player = Player()
+        player.add_directory("./test_files/")
+        player.start(["Kriss_-_03_-_jazz_club.mp3"])
+        time.sleep(4)  # take a bit to start
+        self.assertTrue(player.current(), "Kriss_-_03_-_jazz_club.mp3")
 if __name__ == '__main__':
     main()
