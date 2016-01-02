@@ -141,7 +141,6 @@
         };
         html ="<<ul class='list' id=\"queue\">" + html + "<ul/>";
         document.getElementById("master").innerHTML += html;
-        //$("div").select("master").append(html);
     });
 
     $.getJSON("/player/available", function (data) {
@@ -157,11 +156,6 @@
         });
         html ="<<ul class='list' id=\"available\">" + html + "<ul/>";
         document.getElementById("master").innerHTML += html;
-
-        $("<ul/>", {
-            "class": "available",
-            html: html
-        }).appendTo("body");
     });
 
 </script>
