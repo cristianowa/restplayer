@@ -35,8 +35,8 @@ class TestPlayer(TestCase):
         player = Player()
         player.add_directory("./test_files/")
         player.start("DOt_-_05_-_IMF.mp3")
-        time.sleep(4)  # take a bit to start
-        player.pause()
+        #time.sleep(4)  # take a bit to start
+        #player.pause()
         self.assertTrue(True)
 
     def test_play(self):
@@ -101,5 +101,13 @@ class TestPlayer(TestCase):
         player.start(["Kriss_-_03_-_jazz_club.mp3"])
         time.sleep(4)  # take a bit to start
         self.assertTrue(player.current(), "Kriss_-_03_-_jazz_club.mp3")
+    def test_current_empty(self):
+        player = Player()
+        player.add_directory("./test_files/")
+        self.assertEqual(player.current(), "")
+        player.start(["Kriss_-_03_-_jazz_club.mp3"])
+        time.sleep(2)  # take a bit to start
+        player.stop()
+        self.assertEqual(player.current(),"")
 if __name__ == '__main__':
     main()

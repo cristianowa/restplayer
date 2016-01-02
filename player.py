@@ -102,8 +102,8 @@ class Player:
 
 
     def pause(self):
-        if self.player is not None:
-            self.player.stop()
+        if self.mediaplayer is not None:
+            self.mediaplayer.pause()
 
     def play(self):
         if self.player is not None:
@@ -134,4 +134,9 @@ class Player:
             self.play()
 
     def current(self):
-        return self.mediaplayer.get_media().get_meta(0)
+        try:
+            if self.mediaplayer.is_playing():
+                return self.mediaplayer.get_media().get_meta(0)
+            return ""
+        except:
+            return ""

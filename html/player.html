@@ -126,7 +126,21 @@
 </div>
 
 <script>
-    //var cars = JSON.parse()
+    $.getJSON("/player/current", function (data) {
+        var items = [];
+        $.each(data, function (key, val) {
+            alert(val);
+            if (key == "queue") {
+                items = val
+            }
+        });
+        var html = "<h1>Current playing</h1>";
+        for (var i = 0; i < items.length; i++) {
+            html += "<li>" + items[i] + "</li>";
+        };
+        html ="<ul class='list' id=\"queue\">" + html + "<ul/>";
+        document.getElementById("master").innerHTML += html;
+    });
     $.getJSON("/stage", function (data) {
         var items = [];
         $.each(data, function (key, val) {
@@ -139,7 +153,7 @@
         for (var i = 0; i < items.length; i++) {
             html += "<li>" + items[i] + "</li>";
         };
-        html ="<<ul class='list' id=\"queue\">" + html + "<ul/>";
+        html ="<ul class='list' id=\"queue\">" + html + "<ul/>";
         document.getElementById("master").innerHTML += html;
     });
 
@@ -154,7 +168,7 @@
             }
             html += "</ul></li>";
         });
-        html ="<<ul class='list' id=\"available\">" + html + "<ul/>";
+        html ="<ul class='list' id=\"available\">" + html + "<ul/>";
         document.getElementById("master").innerHTML += html;
     });
 
