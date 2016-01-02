@@ -1,10 +1,11 @@
-<head xmlns="http://www.w3.org/1999/html">
-    <title>
-        RestPlayer
-    </title>
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
-    <script src="d3.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Available 2</title>
+    <script src="jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="font-awesome.min.css">
     <style>
         body {
             background-color: lightgrey;
@@ -57,38 +58,39 @@
     </style>
 </head>
 <body>
-<div class="center">
+<div class="center" id="master">
     <p>
-        <form action=/player/prev method="put" style="display: inline;">
-            <button class="btn large" title="Previus" type="submit" name="previus">
-                <i class="fa fa-backward fa-5x"/> </i> </button>
-        </form>
 
-        <form action=/player/play method="put" style="display: inline;">
-            <button class="btn large" title="Play" type="submit" name="play">
-                <i class="fa fa-play fa-5x"/> </i> </button>
-            </button>
-        </form>
+    <form action=/player/prev method="put" style="display: inline;">
+        <button class="btn large" title="Previus" type="submit" name="previus">
+            <i class="fa fa-backward fa-5x"/> </i> </button>
+    </form>
 
-        <form action=/player/pause method="put" style="display: inline;">
-            <button class="btn large" title="Pause" type="submit" name="pause">
-                <i class="fa fa-pause fa-5x"/> </i> </button>
-            </button>
-        </form>
+    <form action=/player/play method="put" style="display: inline;">
+        <button class="btn large" title="Play" type="submit" name="play">
+            <i class="fa fa-play fa-5x"/> </i> </button>
+        </button>
+    </form>
 
-        <form action=/player/next method="put" style="display: inline;">
-            <button class="btn btn-large" title="Next" type="submit" name="next">
-                <i class="fa fa-forward fa-5x"/> </i> </button>
-            </button>
-        </form>
+    <form action=/player/pause method="put" style="display: inline;">
+        <button class="btn large" title="Pause" type="submit" name="pause">
+            <i class="fa fa-pause fa-5x"/> </i> </button>
+        </button>
+    </form>
 
-        <form action=/player/stop method="put" style="display: inline;">
-            <button class="btn btn-large" title="Stop" type="submit" name="stop">
-                <i class="fa fa-stop fa-5x"/> </i> </button>
-            </button>
-        </form>
+    <form action=/player/next method="put" style="display: inline;">
+        <button class="btn btn-large" title="Next" type="submit" name="next">
+            <i class="fa fa-forward fa-5x"/> </i> </button>
+        </button>
+    </form>
+
+    <form action=/player/stop method="put" style="display: inline;">
+        <button class="btn btn-large" title="Stop" type="submit" name="stop">
+            <i class="fa fa-stop fa-5x"/> </i> </button>
+        </button>
+    </form>
     </p>
-<div>
+    <div>
         <a href="/upload/music/" target="_blank">
             <i class="fa fa-cloud-upload fa-3x" title="Upload audio"></i>
         </a>
@@ -120,16 +122,42 @@
         <a href="/volume/off">
             <i class="fa fa-volume-off fa-3x" title="Volume off"></i>
         </a>
-</div>
-
-
-    <div>
-        <p>
-            <iframe src=queue.html width="680" height="150"></iframe>
-    </div>
-    <div>
-        <p>
-            <iframe src=available.html width="680" height="600"></iframe>
     </div>
 </div>
+
+<script>
+    //var cars = JSON.parse()
+    $.getJSON("/stage", function (data) {
+        var items = [];
+        $.each(data, function (key, val) {
+
+            if (key == "queue") {
+                items = val
+            }
+        });
+        var html = "<h1>Playing Queue</h1>";
+        for (var i = 0; i < items.length; i++) {
+            html += "<li>" + items[i] + "</li>";
+        };
+        html ="<<ul class='list' id=\"queue\">" + html + "<ul/>";
+        document.getElementById("master").innerHTML += html;
+    });
+
+    $.getJSON("/player/available", function (data) {
+        var html = "<h1>Available Music</h1>";
+        $.each(data, function (key, val) {
+            html += "<li>" + key;
+            html += "<ul>";
+
+            for (var i = 0; i < val.length; i++) {
+                html += "<li> <a href='/stage/add/" + val[i] + "'>" + val[i] + "</a></li>";
+            }
+            html += "</ul></li>";
+        });
+        html ="<<ul class='list' id=\"available\">" + html + "<ul/>";
+        document.getElementById("master").innerHTML += html;
+    });
+
+</script>
 </body>
+</html>
