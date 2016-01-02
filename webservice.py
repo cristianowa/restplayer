@@ -2,11 +2,10 @@
 import os
 
 from flask import Flask, jsonify, abort, request, redirect
-from werkzeug import secure_filename
 from nestedict import Nestedict
 import alsaaudio
 
-from player import Player, NOTFOUND
+from player import Player
 import config
 import url
 app = Flask(__name__,static_folder='html/')
