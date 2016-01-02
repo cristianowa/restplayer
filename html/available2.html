@@ -6,9 +6,6 @@
     <script src="jquery-1.11.3.min.js"></script>
 </head>
 <body>
-<body>
-
-</body>
 <div id="demo"></div>
 
 <script>
@@ -22,13 +19,32 @@ $.getJSON( "stage", function( data ) {
   });
     var html = ""
   for(var i = 0; i < items.length; i++) {
-    alert(items[i]);
     html+= "<li>" + items[i] + "</li>";
   }
   $( "<ul/>", {
-    "class": "my-new-list",
+    "class": "queue",
     html: html
-  }).appendTo( "body" );
+  }).appendTo( "body");
+});
+
+$.getJSON( "/player/available", function( data ) {
+  var html = ""
+  $.each( data, function( key, val ) {
+      alert(key)
+      html+= "<li>" + key ;
+      html +="<ul>";
+
+      for(var i = 0; i < val.length; i++) {
+        html+= "<li> <a href='/stage/add/" + val[i] + "'>" + val[i] + "</a></li>";
+      }
+      html +="</ul></li>";
+  });
+
+
+  $( "<ul/>", {
+    "class": "avaible",
+    html: html
+  }).appendTo( "body");
 });
 
 //document.getElementById("demo").innerHTML += "<ul>";
