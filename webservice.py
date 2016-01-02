@@ -1,9 +1,7 @@
 #!/usr/bin/python
 import os
-from difflib import ndiff
 
-from flask import Flask, jsonify, abort, request, send_from_directory, redirect
-from flask.ext.restful.representations.json import output_json
+from flask import Flask, jsonify, abort, request, redirect
 from werkzeug import secure_filename
 from nestedict import Nestedict
 import alsaaudio
@@ -15,15 +13,17 @@ app = Flask(__name__,static_folder='html/')
 
 current_player = Player()
 staged = []
+
 def sanitize(s):
     return unicode(s)
+
 @app.route('/stage/add/<entry>')
 def stage_add(entry):
     global staged
     global current_player
     if current_player.found_entry(sanitize(entry)) is not None:
         staged.append(entry)
-    return redirect("/available.html")
+    return redirect("/")
 
 @app.route('/stage')
 def stage():
@@ -40,7 +40,6 @@ def stage_clear():
     global staged
     staged = []
     return redirect("/")
-
 
 @app.route('/stage.json')
 def stage_json():
@@ -81,10 +80,16 @@ def prev():
     global  current_player
     return redirect("/")
 
+@app.route('/player/current')
+def current():
+    global current_player
+    return jsonify({"current":current_player.current()}),201
+
 @app.route('/player/available/')
 def available():
     global current_player
-    return unicode(current_player.list_available()), 201
+    return jsonify(current_player.list_available())
+
 
 @app.route('/player/available.json')
 def available_json():
