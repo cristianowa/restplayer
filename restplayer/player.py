@@ -122,7 +122,7 @@ class Player:
             self.player = None
         self.mediaplayer = MediaPlayer()
         if isinstance(name, str) or isinstance(name, unicode):
-            name = [str(self.found_entry(name))]
+            name = [name]
 
         playlist = MediaList()
         for entry in name:
