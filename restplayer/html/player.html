@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Available 2</title>
+    <title>Rest Player</title>
     <script src="jquery-1.11.3.min.js"></script>
     <link rel="stylesheet" href="bootstrap.min.css">
     <link rel="stylesheet" href="font-awesome.min.css">
@@ -129,7 +129,6 @@
     $.getJSON("/player/current", function (data) {
         var items = [];
         $.each(data, function (key, val) {
-            alert(val);
             if (key == "queue") {
                 items = val
             }
