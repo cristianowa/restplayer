@@ -15,11 +15,13 @@ def stage_add(entry):
 
 @app.route('/stage')
 def stage():
+    global staged
     return jsonify({"queue": staged})
 
 
 @app.route('/stage/save/', methods=["POST", "GET"])
 def stage_save():
+    global staged
     if request.method == "POST":
         text = request.form['text']
         playlist.createplaylist(staged, text)
@@ -42,12 +44,14 @@ def stage_save():
 
 @app.route('/stage/clear/')
 def stage_clear():
+    global staged
     staged = []
     return redirect("/")
 
 
 @app.route('/stage.json')
 def stage_json():
+    global staged
     ndict = Nestedict("Playing Queue", 1)
     for entry in staged:
         ndict.add_node("Playing Queue/" + unicode(entry), 1)
