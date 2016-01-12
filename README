@@ -17,6 +17,12 @@ $ sudo pip install python-vlc flask pyalsaaudio
 Debian:
 sudo apt-get install libasound2-dev
 
+## For starting it just type:
+
+python restplayer.py
+
+It will open a server in port 5000 by default.
+
 ## Why ?
 
 How do you play music on your raspberry pi without controlling it ?
