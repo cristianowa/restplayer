@@ -1,6 +1,6 @@
 from unittest import TestCase, main
 from player import Player
-from dirmanager import DirManager
+from dirmanager_ws import DirManager
 import time
 import vlc
 import tempfile, os
