@@ -4,9 +4,14 @@ from nestedict import  Nestedict
 
 from vlc import  MediaPlayer, MediaListPlayer, MediaList
 import config
+import config
+
+from nestedict import Nestedict
+
 NOTFOUND = "Not Found"
 
-class Player:
+
+class DirManager:
     def __init__(self, dirs=[]):
         assert(isinstance(dirs, list) == True)
         self.dirs = dirs
@@ -14,12 +19,6 @@ class Player:
         self.add_directory(config.url_location)
         self.add_directory(config.playlist_location)
         self.add_directory(config.uploaded_location)
-        self.player = None
-
-
-    def __del__(self):
-        if self.player is not None:
-            self.player.stop()
 
     def load_directories(self):
         if not os.path.exists(config.player_persistance):
@@ -101,6 +100,16 @@ class Player:
         return NOTFOUND
 
 
+class Player(DirManager):
+    def __init__(self, dirs = []):
+        DirManager.__init__(self, dirs)
+        self.player = None
+
+
+    def __del__(self):
+        if self.player is not None:
+            self.player.stop()
+
     def pause(self):
         if self.mediaplayer is not None:
             self.mediaplayer.pause()
@@ -121,12 +130,10 @@ class Player:
             self.player.stop()
             self.player = None
         self.mediaplayer = MediaPlayer()
-        if isinstance(name, str) or isinstance(name, unicode):
-            name = [name]
-
+        assert(isinstance(name, list))
         playlist = MediaList()
         for entry in name:
-            playlist.add_media(self.found_entry(entry))
+            playlist.add_media(entry)
         self.player = MediaListPlayer()
         self.player.set_media_list(playlist)
         self.player.set_media_player(self.mediaplayer)

@@ -4,13 +4,14 @@ import os
 from flask import Flask, jsonify, abort, request, redirect
 from nestedict import Nestedict
 import alsaaudio
-
-from player import Player
+import playlist
+from player import Player, DirManager
 import config
 import url
 app = Flask(__name__,static_folder='html/')
 
 current_player = Player()
+dir_manager = DirManager()
 staged = []
 
 def sanitize(s):
@@ -20,7 +21,7 @@ def sanitize(s):
 def stage_add(entry):
     global staged
     global current_player
-    if current_player.found_entry(sanitize(entry)) is not None:
+    if dir_manager.found_entry(sanitize(entry)) is not None:
         staged.append(entry)
     return redirect("/")
 
@@ -29,10 +30,27 @@ def stage():
     global staged
     return jsonify({"queue":staged})
 
-@app.route('/stage/save/')
+@app.route('/stage/save/', methods=["POST","GET"])
 def stage_save():
     global staged
-    return redirect("/")
+    if request.method == "POST":
+        text = request.form['text']
+        playlist.createplaylist(staged, text)
+        return  redirect("/")
+    elif request.method == "GET":
+        return '''
+    <!doctype html>
+    <title>Save Playlist</title>
+    <h1>Playlist Name</h1>
+    <form action="/stage/save/" method=post>
+      <p><input type=text name=text>
+         <input type=submit value=Send>
+    </form>
+    '''
+    else:
+        print "UPS" \
+              ""
+        abort(400)
 
 @app.route('/stage/clear/')
 def stage_clear():
@@ -64,7 +82,8 @@ def stop():
 def play():
     global staged
     global  current_player
-    current_player.start(staged)
+    fullpath = [dir_manager.found_entry(x) for x in staged]
+    current_player.start(fullpath)
     current_player.play()
     return redirect("/")
 
@@ -87,24 +106,24 @@ def current():
 @app.route('/player/available/')
 def available():
     global current_player
-    return jsonify(current_player.list_available())
+    return jsonify(dir_manager.list_available())
 
 
 @app.route('/player/available.json')
 def available_json():
     global current_player
-    return jsonify(current_player.list_available_nested_dict()), 201
+    return jsonify(dir_manager.list_available_nested_dict()), 201
 
 @app.route('/control/directory/', methods=["POST","GET","DELETE"])
 def directory():
     global current_player
     if request.method == "POST":
         text = request.form['text']
-        current_player.add_directory(sanitize(text))
+        dir_manager.add_directory(sanitize(text))
         return  redirect("/")
     elif request.method == "DELETE":
         text = request.form['text']
-        current_player.del_directory(sanitize(text))
+        dir_manager.del_directory(sanitize(text))
         return  redirect("/")
     elif request.method == "GET":
         return '''

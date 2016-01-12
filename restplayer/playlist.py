@@ -7,4 +7,6 @@ def createplaylist(entries, filename):
     :param filename:file to create, it will be putted in the playlist
     :return:
     """
-    open(os.path.join(config.playlist_location, filename + ".m3u"), "w").writelines(entries)
+    f = open(os.path.join(config.playlist_location, filename + ".m3u"), "w")
+    f.writelines("\n".join(entries))
+    f.close()

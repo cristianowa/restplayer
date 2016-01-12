@@ -1,1 +1,3 @@
-export PYTHONPATH=$PYTHONPATH:../restplayer; py test_player.py 
+export PYTHONPATH=$PYTHONPATH:../restplayer
+python test_player.py
+python test_playlist.py
