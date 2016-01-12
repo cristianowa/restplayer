@@ -100,9 +100,8 @@ class DirManager:
         return NOTFOUND
 
 
-class Player(DirManager):
-    def __init__(self, dirs = []):
-        DirManager.__init__(self, dirs)
+class Player:
+    def __init__(self):
         self.player = None
 
 
