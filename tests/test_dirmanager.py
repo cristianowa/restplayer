@@ -1,6 +1,6 @@
 from unittest import TestCase, main
 import tempfile, os
-from dirmanager_ws import DirManager
+from dirmanager import DirManager
 
 
 class TestDirManager(TestCase):
