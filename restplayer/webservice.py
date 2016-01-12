@@ -5,7 +5,8 @@ from flask import Flask, jsonify, abort, request, redirect
 from nestedict import Nestedict
 import alsaaudio
 import playlist
-from player import Player, DirManager
+from player import Player
+from dirmanager import DirManager
 import config
 import url
 app = Flask(__name__,static_folder='html/')

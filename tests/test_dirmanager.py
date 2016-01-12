@@ -1,6 +1,7 @@
 from unittest import TestCase, main
 import tempfile, os
-from player import DirManager
+from dirmanager import DirManager
+
 
 class TestDirManager(TestCase):
     def test_found_entry(self):
