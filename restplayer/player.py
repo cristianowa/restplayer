@@ -6,7 +6,7 @@ NOTFOUND = "Not Found"
 class Player:
     def __init__(self):
         self.player = None
-
+        self.mediaplayer = None
 
     def __del__(self):
         if self.player is not None:
