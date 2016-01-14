@@ -8,5 +8,5 @@ def createplaylist(entries, filename):
     :return:
     """
     f = open(os.path.join(config.playlist_location, filename + ".m3u"), "w")
-    f.writelines("\n".join(entries))
+    f.write("\n".join(entries).encode("UTF-8"))
     f.close()

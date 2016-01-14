@@ -3,11 +3,17 @@ from nestedict import Nestedict
 from werkzeug.utils import redirect
 import playlist
 from start import app,  sanitize, dir_manager, staged
-
+import os
+import config
 
 
 @app.route('/stage/add/<entry>')
 def stage_add(entry):
+    if entry.rsplit(".", 1)[1] == "m3u":
+        with open(os.path.join(config.playlist_location, entry)) as f:
+            for music in f.readlines():
+                staged.append(music)
+        return redirect("/")
     if dir_manager.found_entry(sanitize(entry)) is not None:
         staged.append(entry)
     return redirect("/")
