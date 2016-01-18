@@ -2,7 +2,7 @@ import alsaaudio
 
 from werkzeug.utils import redirect
 
-from start import app
+from start_ws import app
 
 
 @app.route("/volume/up")

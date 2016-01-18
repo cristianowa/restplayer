@@ -2,7 +2,7 @@ from flask import jsonify, request, redirect, abort
 from nestedict import Nestedict
 from werkzeug.utils import redirect
 import playlist
-from start import app,  sanitize, dir_manager, staged
+from start_ws import app,  sanitize, dir_manager, staged
 import os
 import config
 

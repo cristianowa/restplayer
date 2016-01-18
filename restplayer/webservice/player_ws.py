@@ -1,7 +1,7 @@
 from flask import jsonify
 from werkzeug.utils import redirect
 
-from start import app,  dir_manager, staged
+from start_ws import app,  dir_manager, staged
 from player import Player
 current_player = Player()
 

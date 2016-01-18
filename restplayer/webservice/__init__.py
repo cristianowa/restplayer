@@ -4,9 +4,9 @@ import os
 import config
 from flask import request, redirect
 
-from start import app, dir_manager, sanitize
+from start_ws import app, dir_manager, sanitize
 
-import  player_ws, stage, dirmanager_ws, volume
+import  player_ws, stage_ws, dirmanager_ws, volume_ws
 
 @app.route('/upload/playlist/', methods=["POST", "GET"])
 def uploadplaylist():
