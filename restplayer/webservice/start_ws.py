@@ -1,8 +1,9 @@
-from dirmanager import dirmanager
+
 from flask import Flask
-from stage import stage
 app = Flask(__name__,static_folder='../html/')
 
-dir_manager = dirmanager
+#importing this objects here creates a functional singleton pattern
+from stage import stage
+from dirmanager import dirmanager
 
 

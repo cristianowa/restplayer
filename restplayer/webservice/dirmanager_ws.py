@@ -1,26 +1,26 @@
 from flask import jsonify, request, redirect, abort
 
-from start_ws import dir_manager, app
+from start_ws import dirmanager, app
 
 @app.route('/player/available/')
 def available():
-    return jsonify(dir_manager.list_available())
+    return jsonify(dirmanager.list_available())
 
 
 @app.route('/player/available.json')
 def available_json():
-    return jsonify(dir_manager.list_available_nested_dict()), 201
+    return jsonify(dirmanager.list_available_nested_dict()), 201
 
 
 @app.route('/control/directory/', methods=["POST", "GET", "DELETE"])
 def directory():
     if request.method == "POST":
         text = request.form['text']
-        dir_manager.add_directory(sanitize(text))
+        dirmanager.add_directory(sanitize(text))
         return  redirect("/")
     elif request.method == "DELETE":
         text = request.form['text']
-        dir_manager.del_directory(sanitize(text))
+        dirmanager.del_directory(sanitize(text))
         return  redirect("/")
     elif request.method == "GET":
         return '''
