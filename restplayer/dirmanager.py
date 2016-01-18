@@ -93,3 +93,5 @@ class DirManager:
         if entry in self.dirs:
             return entry
         return NOTFOUND
+
+dirmanager = DirManager()

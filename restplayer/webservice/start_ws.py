@@ -1,12 +1,8 @@
+from dirmanager import dirmanager
 from flask import Flask
-
-from dirmanager import DirManager
-
+from stage import stage
 app = Flask(__name__,static_folder='../html/')
 
-dir_manager = DirManager()
-staged = []
+dir_manager = dirmanager
 
 
-def sanitize(s):
-    return unicode(s)

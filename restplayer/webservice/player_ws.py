@@ -1,7 +1,7 @@
 from flask import jsonify
 from werkzeug.utils import redirect
 
-from start_ws import app,  dir_manager, staged
+from start_ws import app,  dir_manager, stage
 from player import Player
 current_player = Player()
 
@@ -19,8 +19,7 @@ def stop():
 
 @app.route('/player/play')
 def play():
-    global staged
-    fullpath = [dir_manager.found_entry(x) for x in staged]
+    fullpath = [dir_manager.found_entry(x) for x in stage.array]
     current_player.start(fullpath)
     current_player.play()
     return redirect("/")
