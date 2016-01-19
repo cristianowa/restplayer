@@ -53,7 +53,13 @@
 
         }
 
-        ​
+        ​ul  {
+        list-style-type: none;
+        }
+
+        li {
+            list-style: none;
+        }
 
     </style>
 </head>
@@ -159,7 +165,7 @@
     $.getJSON("/player/available", function (data) {
         var html = "<h1>Available Music</h1>";
         $.each(data, function (key, val) {
-            html += "<li>" + key;
+            html += "<li>" + key.split("/").pop();
             html += "<ul>";
 
             for (var i = 0; i < val.length; i++) {
