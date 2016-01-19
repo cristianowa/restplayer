@@ -166,6 +166,8 @@
         var html = "<h1>Available Music</h1>";
         $.each(data, function (key, val) {
             html += "<li>" + key.split("/").pop();
+            html += "<a href='/stage/adddir/" + key.split("/").join("_") + "'>" +
+                    " <i class=\"fa fa-plus-square fa-1x\" title=\" " + key + "\"></i></a>";
             html += "<ul>";
 
             for (var i = 0; i < val.length; i++) {

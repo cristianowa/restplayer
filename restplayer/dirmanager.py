@@ -43,12 +43,20 @@ class DirManager:
             return None
         return None
 
+    def found_entries(self, directory):
+        if directory not in self.dirs:
+            return []
+        entries = os.listdir(directory)
+        return entries
+
     def list_available(self):
         ret = {}
         for directory in self.dirs:
             try:
                 try:
-                    for entry in os.listdir(directory):
+                    dirlist = os.listdir(directory)
+                    dirlist.reverse()
+                    for entry in dirlist:
                         extensions = entry.rsplit(".", 1)
                         if len(extensions) > 1 and extensions[1] in ["url", "m3u"] + config.supported_extensions:
                             if directory not in ret.keys():

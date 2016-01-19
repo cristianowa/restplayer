@@ -2,14 +2,16 @@ from flask import jsonify, request, redirect, abort
 from nestedict import Nestedict
 from werkzeug.utils import redirect
 from start_ws import app, dirmanager, stage
-from common import sanitize
-import os
-import config
 
 
 @app.route('/stage/add/<entry>')
 def stage_add(entry):
     stage.add(entry)
+    return redirect("/")
+
+@app.route('/stage/adddir/<entry>')
+def stage_adddir(entry):
+    stage.adddir(entry.replace("_","/"))
     return redirect("/")
 
 

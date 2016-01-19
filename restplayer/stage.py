@@ -15,12 +15,18 @@ class Stage:
 
         if dirmanager.found_entry(sanitize(entry)) is not None:
             self.array.append(entry)
+
+    def adddir(self, entry):
+        self.array += dirmanager.found_entries(entry)
+
     def clear(self):
         self.array = []
+
     def createplaylist(self, filename):
         f = open(os.path.join(config.playlist_location, filename + ".m3u"), "w")
         entries = [x.encode("UTF-8") for x in self.array]
         text = "\n".join(entries)
         f.write(text)
         f.close()
+
 stage = Stage()
