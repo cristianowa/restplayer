@@ -1,13 +1,14 @@
 from unittest import TestCase, main
+from test_utils import *
 import tempfile, os
 from dirmanager import DirManager
 
 
-class TestDirManager(TestCase):
+class TestDirManager(TestSetup):
     def test_found_entry(self):
         dirManager = DirManager()
-        dirManager.add_directory("../test_files/")
-        ans = dirManager.found_entry("DOt_-_05_-_IMF.mp3")
+        dirManager.add_directory(test_dir)
+        ans = dirManager.found_entry(dot)
         self.assertTrue(ans == "../test_files/DOt_-_05_-_IMF.mp3")
 
     def test_add_directory(self):
