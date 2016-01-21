@@ -51,6 +51,6 @@ def stage_clear():
 @app.route('/stage.json')
 def stage_json():
     ndict = Nestedict("Playing Queue", 1)
-    for entry in stage:
+    for entry in stage.array:
         ndict.add_node("Playing Queue/" + unicode(entry), 1)
     return jsonify(dict(ndict))
