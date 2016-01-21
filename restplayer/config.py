@@ -15,7 +15,6 @@ url_location = os.path.join(base_dir, url_location)
 playlist_location = os.path.join(base_dir, playlist_location)
 uploaded_location = os.path.join(base_dir, uploaded_location)
 player_persistance = os.path.join(base_dir, player_persistance)
-import shutil
 def __setup__():
     try:
         os.makedirs(url_location)
@@ -29,6 +28,22 @@ def __setup__():
         os.makedirs(uploaded_location)
     except:
         pass
+
+
+
+def __reload__():
+    global  url_location
+    global playlist_location
+    global  uploaded_location
+    global  player_persistance
+    playlist_location = "playlists"
+    uploaded_location = "uploaded"
+    player_persistance = "persistance.shelve"
+    url_location = os.path.join(base_dir, url_location)
+    playlist_location = os.path.join(base_dir, playlist_location)
+    uploaded_location = os.path.join(base_dir, uploaded_location)
+    player_persistance = os.path.join(base_dir, player_persistance)
+    __setup__()
 
 
 __setup__()
