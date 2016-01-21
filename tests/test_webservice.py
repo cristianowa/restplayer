@@ -4,16 +4,12 @@ import test_utils
 import json
 test_app = webservice.start_ws.app.test_client()
 
-valid_codes = [200,201,302]
+valid_codes = [200,201,301, 302]
 
 class TestWSStatic(test_utils.TestSetup):
-
-#  '/map/', '/',  , '/[filename]', '//[path:filename]'
     def test_main_page(self):
         rv = test_app.get("/")
         self.assertTrue(rv.status_code in valid_codes, "Wrong return code. Code was : " + str(rv.status_code))
-        print(dir(test_app))
-        print(dir(test_app.application))
 
     def test_static_file(self):
         rv = test_app.get("/player.html")
@@ -21,7 +17,9 @@ class TestWSStatic(test_utils.TestSetup):
         rv = test_app.get("/bootstrap.min.css")
         self.assertTrue(rv.status_code in valid_codes, "Wrong return code. Code was : " + str(rv.status_code))
 
-
+    def test_map(self):
+        rv = test_app.get("/map")
+        self.assertTrue(rv.status_code in valid_codes, "Wrong return code. Code was : " + str(rv.status_code))
 
 class TestWSPlayer(test_utils.TestSetup):
     def test_available_json(self):
@@ -31,7 +29,24 @@ class TestWSPlayer(test_utils.TestSetup):
             json.loads(rv.data)
         except:
             self.assertFalse(True, "Wrong json data")
-#  '/player/current', '/player/pause', '/player/stop', '/player/play', '/player/next', '/player/prev',
+    def test_current(self):
+        url = '/player/current'
+        #TODO:write test
+    def test_pause(self):
+        url = '/player/pause'
+        #TODO:write test
+    def test_stop(self):
+        url = '/player/stop'
+        #TODO:write test
+    def test_play(self):
+        url = '/player/play'
+        #TODO:write test
+    def test_next(self):
+        url = '/player/next'
+        #TODO:write test
+    def test_prev(self):
+        url = '/player/prev',
+        #TODO:write test
     def test_available(self):
         url = "/player/available/"
         rv = test_app.get(url)
@@ -39,13 +54,20 @@ class TestWSPlayer(test_utils.TestSetup):
 
 
 class TestWSControl(test_utils.TestSetup):
-# '/control/directory/', '/control/createurl/', '/control/createurl/[entry]',
     def test_add_dir(self):
         url = "/control/directory/"
         rv = test_app.get(url)
         self.assertTrue(rv.status_code in valid_codes, "Wrong return code. Code was : " + str(rv.status_code))
         payload = {"text":"newdir"}
         test_app.post(url, content_type='multipart/form-data', data=payload)
+
+    def test_create_url(self):
+        url = "/control/createurl/"
+        #TODO:write test
+
+    def test_create_url_entry(self):
+        url = "/control/createurl/newurl"
+        #TODO:write test
 
     def test_upload_playlist(self):
         url = "/upload/playlist/"
@@ -76,9 +98,15 @@ class TestWSStage(test_utils.TestSetup):
             json.loads(rv.data)
         except:
             self.assertFalse(True, "Wrong json data")
-
-#  '/stage/clear/', '/stage/save/', '/stage.json', '/stage', '/stage/adddir/[entry]', '/stage/add/[entry]'
-
+    def test_stage(self):
+        url = '/stage'
+        #TODO:write test
+    def test_adddir(self):
+        url = '/stage/adddir/' + test_utils.test_dir
+        #TODO:write test
+    def test_add(self):
+        url = '/stage/add/' + test_utils.dot
+        #TODO:write test
 
 class TestWSVolume(test_utils.TestSetup):
     def test_volume_down(self):
