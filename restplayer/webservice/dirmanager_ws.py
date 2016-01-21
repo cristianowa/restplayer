@@ -1,7 +1,7 @@
 from flask import jsonify, request, redirect, abort
 
 from start_ws import dirmanager, app
-
+from common import sanitize
 @app.route('/player/available/')
 def available():
     return jsonify(dirmanager.list_available())
