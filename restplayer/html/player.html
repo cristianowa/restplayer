@@ -133,16 +133,14 @@
 
 <script>
     $.getJSON("/player/current", function (data) {
-        var items = [];
+        var current = "";
         $.each(data, function (key, val) {
-            if (key == "queue") {
-                items = val
+              if (key == "current") {
+                current = val
             }
         });
         var html = "<h1>Current playing</h1>";
-        for (var i = 0; i < items.length; i++) {
-            html += "<li>" + items[i] + "</li>";
-        };
+        html += "<h2>" + current + "</h2>";
         html ="<ul class='list' id=\"queue\">" + html + "<ul/>";
         document.getElementById("master").innerHTML += html;
     });
