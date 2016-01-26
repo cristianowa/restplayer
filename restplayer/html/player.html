@@ -61,6 +61,33 @@
             list-style: none;
         }
 
+        #playqueue {
+            border-radius: 25px;
+            border: 2px solid #212121;
+            background: #204d74;
+            color: #ffffff;
+            padding: 20px;
+            position: center;
+            text-align: center;
+            width: 500px;
+            height: 150px;
+            float:left;
+
+        }
+
+
+        #directory {
+            border-radius: 25px;
+            border: 2px solid #212121;
+            padding: 20px;
+            position: center;
+            text-align: center;
+            width: 500px;
+            height: 150px;
+            float:left;
+
+        }
+
     </style>
 </head>
 <body>
@@ -105,10 +132,6 @@
             <i class="fa fa-eject fa-3x" title="Add new directory"></i>
         </a>
 
-        <a href="/upload/playlist/" target="_blank">
-            <i class="fa fa-list fa-3x" title="Upload new playlist"></i>
-        </a>
-
         <a href="/stage/save/" target="_blank">
             <i class="fa fa-save fa-3x" title="Save queue to playlist"></i>
         </a>
@@ -130,8 +153,11 @@
         </a>
     </div>
 </div>
+<div class="center" id="master">
+</div>
 
 <script>
+    var intervalID = setInterval(
     $.getJSON("/player/current", function (data) {
         var current = "";
         $.each(data, function (key, val) {
@@ -143,7 +169,7 @@
         html += "<h2>" + current + "</h2>";
         html ="<ul class='list' id=\"queue\">" + html + "<ul/>";
         document.getElementById("master").innerHTML += html;
-    });
+    }), 500);
     $.getJSON("/stage", function (data) {
         var items = [];
         $.each(data, function (key, val) {
@@ -152,28 +178,28 @@
                 items = val
             }
         });
-        var html = "<h1>Playing Queue</h1>";
+        var html = "<div id='playqueue' style='height: " + (100 + items.length * 22)+"px'><h1 style='color: #000000'>Playing Queue</h1>";
         for (var i = 0; i < items.length; i++) {
             html += "<li>" + items[i] + "</li>";
         };
-        html ="<ul class='list' id=\"queue\">" + html + "<ul/>";
+        html ="<ul class='list' id=\"queue\">" + html + "<ul/></div>";
         document.getElementById("master").innerHTML += html;
     });
 
     $.getJSON("/player/available", function (data) {
-        var html = "<h1>Available Music</h1>";
+        var html = "";
         $.each(data, function (key, val) {
-            html += "<li>" + key.split("/").pop();
-            html += "<a href='/stage/adddir/" + key.split("/").join("_") + "'>" +
+            html += "<div id='directory' style='height: " + (135 + val.length * 23)+"px'><li><h3>" + key.split("/").pop();
+            html += "</h3><a href='/stage/adddir/" + key.split("/").join("_") + "'>" +
                     " <i class=\"fa fa-plus-square fa-1x\" title=\" " + key + "\"></i></a>";
             html += "<ul>";
 
             for (var i = 0; i < val.length; i++) {
                 html += "<li> <a href='/stage/add/" + val[i] + "'>" + val[i] + "</a></li>";
             }
-            html += "</ul></li>";
+            html += "</ul></li></div>";
         });
-        html ="<ul class='list' id=\"available\">" + html + "<ul/>";
+        html =html;
         document.getElementById("master").innerHTML += html;
     });
 
