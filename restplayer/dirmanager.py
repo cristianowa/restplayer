@@ -5,6 +5,12 @@ import config
 from nestedict import Nestedict
 from player import NOTFOUND
 
+def extension(s):
+    try:
+        return s.rsplit(".", 1)[1]
+    except:
+        return ""
+
 
 class DirManager:
     def __init__(self, dirs=[]):
@@ -30,8 +36,11 @@ class DirManager:
         d.close()
 
     def found_entry(self, entry):
+        ext = extension(entry)
         try:
-            if entry.rsplit(".", 1)[1] == "url":
+            if ext not in config.supported_extensions:
+                return None
+            if ext == "url":
                 return open(os.path.join(config.url_location, entry)).read().strip("\n")
             for directory in self.dirs:
                 try:
@@ -47,6 +56,12 @@ class DirManager:
         if directory not in self.dirs:
             return []
         entries = os.listdir(directory)
+        for e in entries:
+            print e
+            if extension(e) not in config.supported_extensions:
+                entries.remove(e)
+                print "\tremoving [" + str(e.encode("UTF-8")) + "]"
+        print entries
         return entries
 
     def list_available(self):
@@ -57,8 +72,8 @@ class DirManager:
                     dirlist = os.listdir(directory)
                     dirlist.reverse()
                     for entry in dirlist:
-                        extensions = entry.rsplit(".", 1)
-                        if len(extensions) > 1 and extensions[1] in ["url", "m3u"] + config.supported_extensions:
+                        ext = entry.rsplit(".", 1)
+                        if len(ext) > 1 and ext[1] in ["url", "m3u"] + config.supported_extensions:
                             if directory not in ret.keys():
                                 ret[directory] = []
                             ret[directory].append(entry)
