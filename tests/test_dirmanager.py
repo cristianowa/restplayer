@@ -46,6 +46,11 @@ class TestDirManager(TestSetup):
         open(os.path.join(tmpdir,"other"), "w").close()
         dirManager.add_directory(tmpdir)
         self.assertTrue(isinstance(dirManager.list_available(), dict))
-
+    def test_random_list(self):
+        dirManager = DirManager()
+        dirManager.add_directory("../test_files/")
+        x = dirManager.random_list()
+        self.assertTrue(True)
 if __name__ == '__main__':
+
     main()

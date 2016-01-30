@@ -4,6 +4,7 @@ import shelve
 import config
 from nestedict import Nestedict
 from player import NOTFOUND
+import random
 
 def extension(s):
     try:
@@ -116,5 +117,21 @@ class DirManager:
         if entry in self.dirs:
             return entry
         return NOTFOUND
+
+    def random_list(self, directory=None):
+        if directory is None:
+            files = []
+            for d in self.dirs:
+                try:
+                    files += [os.path.join(d, f) for f in os.listdir(d)]
+                except OSError:
+                    pass
+        else:
+            files = os.listdir(directory)
+        for f in files:
+            if extension(f) not in config.supported_extensions:
+                files.remove(f)
+        random.shuffle(files)
+        return files
 
 dirmanager = DirManager()
