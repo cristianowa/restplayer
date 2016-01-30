@@ -2,6 +2,7 @@ from common import sanitize
 import os
 import config
 from dirmanager import dirmanager
+import random
 
 class Stage:
     def __init__(self):
@@ -28,5 +29,7 @@ class Stage:
         text = "\n".join(entries)
         f.write(text)
         f.close()
+    def shuffle(self):
+        random.shuffle(self.array)
 
 stage = Stage()
