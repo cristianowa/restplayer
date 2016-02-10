@@ -157,7 +157,6 @@
 </div>
 
 <script>
-    var intervalID = setInterval(
     $.getJSON("/player/current", function (data) {
         var current = "";
         $.each(data, function (key, val) {
@@ -169,7 +168,7 @@
         html += "<h2>" + current + "</h2>";
         html ="<ul class='list' id=\"queue\">" + html + "<ul/>";
         document.getElementById("master").innerHTML += html;
-    }), 500);
+    });
     $.getJSON("/stage", function (data) {
         var items = [];
         $.each(data, function (key, val) {
@@ -187,9 +186,9 @@
     });
 
     $.getJSON("/player/available", function (data) {
-        var html = "";
+        var divs = [];
         $.each(data, function (key, val) {
-            html += "<div id='directory' style='height: " + (135 + val.length * 23)+"px'><li><h3>" + key.split("/").pop();
+            html = "<div id='directory' style='height: " + (135 + val.length * 23)+"px'><li><h3>" + key.split("/").pop();
             html += "</h3><a href='/stage/adddir/" + key.split("/").join("_") + "'>" +
                     " <i class=\"fa fa-plus-square fa-1x\" title=\" " + key + "\"></i></a>";
             html += "<ul>";
@@ -198,9 +197,9 @@
                 html += "<li> <a href='/stage/add/" + val[i] + "'>" + val[i] + "</a></li>";
             }
             html += "</ul></li></div>";
+            divs.push(html)
         });
-        html =html;
-        document.getElementById("master").innerHTML += html;
+        document.getElementById("master").innerHTML += divs.join();
     });
 
 </script>
