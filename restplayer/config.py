@@ -8,7 +8,7 @@ player_persistance = "persistance.shelve"
 supported_extensions = ["mp3", "wma", "wav", "flac"]
 import os
 if home_dir is None:
-    home_dir = os.environ["HOME"]
+    home_dir =  os.path.expanduser("~")
 if base_dir is None:
     base_dir = os.path.join(home_dir, ".restplayer")
 url_location = os.path.join(base_dir, url_location)
