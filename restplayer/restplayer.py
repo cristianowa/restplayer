@@ -73,7 +73,7 @@ def first_run(userCfg):
             print "Error installing supervisor - aborting"
             print "[" + ret + "]"
             return
-        cmd("echo " + psw + " | sudo chown " + getpass.getuser() + " /etc/supervisor/conf.d/restplayer.conf")
+        cmd("echo " + psw + " | sudo -S chown " + getpass.getuser() + " /etc/supervisor/conf.d/restplayer.conf")
         with open("/etc/supervisor/conf.d/restplayer.conf", "w") as f:
             cfg = default_config
             current_path = os.path.abspath(inspect.getfile(inspect.currentframe()))
