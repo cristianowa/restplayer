@@ -1,6 +1,6 @@
 import os
 import shelve
-
+import copy
 import config
 from nestedict import Nestedict
 from player import NOTFOUND
@@ -57,12 +57,9 @@ class DirManager:
         if directory not in self.dirs:
             return []
         entries = os.listdir(directory)
-        for e in entries:
-            print e
+        for e in copy.copy(entries):
             if extension(e) not in config.supported_extensions:
                 entries.remove(e)
-                print "\tremoving [" + str(e.encode("UTF-8")) + "]"
-        print entries
         return entries
 
     def list_available(self):
