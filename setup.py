@@ -9,5 +9,8 @@ setup(
   url = 'https://github.com/cristianowa/restplayer',
   download_url = 'https://github.com/cristianowa/restplayer/archive/0.1.tar.gz', 
   keywords = ['remote player', 'mp3', 'music', 'vlc'],
-  classifiers = [],
+  classifiers = ["Development Status :: 3 - Alpha",
+        "Topic :: Multimedia :: Sound/Audio :: Players",
+        "License :: OSI Approved :: BSD License",],
+  scripts = ["restplayer/restplayer.py"]
 )
