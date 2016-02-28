@@ -2,7 +2,7 @@ import config
 import unittest
 import tempfile
 import re
-from dirmanager import DirManager
+from dirmanager import DirManager, dirmanager
 test_dir = "../test_files/"
 dot = "DOt_-_05_-_IMF.mp3"
 kriss = "Kriss_-_03_-_jazz_club.mp3"
@@ -12,8 +12,10 @@ from commands import getoutput as cmd
 class TestSetup(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        global dirmanager
         config.base_dir = tempfile.mkdtemp()
         config.__reload__()
+        dirmanager = DirManager()
     @classmethod
     def tearDownClass(cls):
         shutil.rmtree(config.base_dir)

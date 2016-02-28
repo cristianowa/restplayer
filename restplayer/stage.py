@@ -20,6 +20,9 @@ class Stage:
     def adddir(self, entry):
         self.array += dirmanager.found_entries(entry)
 
+    def addshuffle(self, entry=None):
+        self.array = dirmanager.random_list(entry)
+
     def clear(self):
         self.array = []
 
