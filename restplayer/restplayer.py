@@ -22,14 +22,6 @@ stderr_logfile=/var/log/restplayer.err.log
 stdout_logfile=/var/log/restplayer.out.log"""
 supervisor_file = "/etc/supervisor/conf.d/restplayer.conf"
 
-
-def is_priveleged():
-    sudo = os.getenv("SUDO_USER")
-    if os.geteuid() != 0 and sudo is None:
-        return False
-    return True
-
-
 class UserConfig:
     def __init__(self):
         self.ip = "0.0.0.0"
