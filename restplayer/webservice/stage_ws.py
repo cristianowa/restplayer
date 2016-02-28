@@ -14,9 +14,19 @@ def stage_adddir(entry):
     stage.adddir(entry.replace("_","/"))
     return redirect("/")
 
+@app.route('/stage/addshuffle/')
+def stage_addshuffle_empty():
+    stage.addshuffle()
+    return redirect("/")
+
 @app.route('/stage/addshuffle/<entry>')
 def stage_addshuffle(entry=None):
-    stage.addshuffle(entry)
+    stage.addshuffle(entry.replace("_","/"))
+    return redirect("/")
+
+@app.route('/stage/shuffle')
+def stage_shuffle():
+    stage.shuffle()
     return redirect("/")
 
 @app.route('/stage')

@@ -124,16 +124,20 @@
     </form>
     </p>
     <div>
-        <a href="/upload/music/" target="_blank">
+        <a href="/upload/music/">
             <i class="fa fa-cloud-upload fa-3x" title="Upload audio"></i>
         </a>
 
-        <a href="/control/directory/" target="_blank">
+        <a href="/control/directory/">
             <i class="fa fa-eject fa-3x" title="Add new directory"></i>
         </a>
 
-        <a href="/stage/save/" target="_blank">
+        <a href="/stage/save/">
             <i class="fa fa-save fa-3x" title="Save queue to playlist"></i>
+        </a>
+
+        <a href="/stage/addshuffle">
+            <i class="fa fa-random fa-3x" title="Add all media randomized"></i>
         </a>
 
         <a href="/stage/clear/">
@@ -177,7 +181,10 @@
                 items = val
             }
         });
-        var html = "<div id='playqueue' style='height: " + (100 + items.length * 22)+"px'><h1 style='color: #000000'>Playing Queue</h1>";
+        var html = "<div id='playqueue' style='height: " + (140 + items.length * 25)+"px'><h1 style='color: #000000'>Playing Queue</h1>";
+
+        html += "</h3><a href='/stage/shuffle'>" +
+                    " <i style='color: white' class=\"fa fa-random fa-1x\" title=\" Randomize\"></i></a>";
         for (var i = 0; i < items.length; i++) {
             html += "<li>" + items[i] + "</li>";
         };
@@ -191,6 +198,8 @@
             html = "<div id='directory' style='height: " + (135 + val.length * 23)+"px'><li><h3>" + key.split("/").pop();
             html += "</h3><a href='/stage/adddir/" + key.split("/").join("_") + "'>" +
                     " <i class=\"fa fa-plus-square fa-1x\" title=\" " + key + "\"></i></a>";
+            html += "</h3><a href='/stage/addshuffle/" + key.split("/").join("_") + "'>" +
+                    " <i class=\"fa fa-random fa-1x\" title=\" " + key + "\"></i></a>";
             html += "<ul>";
 
             for (var i = 0; i < val.length; i++) {
