@@ -120,7 +120,7 @@ class DirManager:
             files = []
             for d in self.dirs:
                 try:
-                    files += [os.path.join(d, f) for f in os.listdir(d)]
+                    files += [f for f in os.listdir(d)]
                 except OSError:
                     pass
         else:

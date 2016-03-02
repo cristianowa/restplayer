@@ -35,7 +35,8 @@ class Player:
         assert(isinstance(name, list))
         playlist = MediaList()
         for entry in name:
-            playlist.add_media(entry)
+            if entry is not None:
+                playlist.add_media(entry)
         self.player = MediaListPlayer()
         self.player.set_media_list(playlist)
         self.player.set_media_player(self.mediaplayer)
