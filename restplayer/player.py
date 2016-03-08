@@ -1,9 +1,48 @@
+import config
 from vlc import  MediaPlayer, MediaListPlayer, MediaList
 
 NOTFOUND = "Not Found"
 
+import subprocess
+import signal
 
-class Player:
+class Mpg123Player:
+    def __init__(self):
+        self.p = None
+        self.list = None
+    def __del__(self):
+        if self.p is not None:
+            self.p.kill()
+
+    def pause(self):
+        if self.p is not None:
+            self.p.kill()
+
+    def play(self):
+        if self.p is not None:
+            self.p.kill()
+        self.p = subprocess.Popen(["mpg123"] + self.list)
+    def stop(self):
+        if self.p is not None:
+            self.p.kill()
+            self.p = None
+
+    def next(self):
+        self.p.send_signal(signal.SIGINT)
+
+    def start(self, name, play=True):
+        assert(isinstance(name, list))
+        self.list = name
+        if play:
+            self.play()
+
+    def current(self):
+        return "Not Available for Mpg123"
+
+    def is_playing(self):
+        return self.p is not None
+
+class VlcPlayer:
     def __init__(self):
         self.player = None
         self.mediaplayer = None
@@ -50,3 +89,15 @@ class Player:
             return ""
         except:
             return ""
+
+    def is_playing(self):
+        return self.player.is_playing()
+
+player_choices = {
+    "vlc" : VlcPlayer,
+    "mpg123" : Mpg123Player
+}
+try:
+    Player = player_choices[config.player_choice]
+except:
+    Player = Mpg123Player

@@ -15,6 +15,8 @@ url_location = os.path.join(base_dir, url_location)
 playlist_location = os.path.join(base_dir, playlist_location)
 uploaded_location = os.path.join(base_dir, uploaded_location)
 player_persistance = os.path.join(base_dir, player_persistance)
+player_choice = "Vlc"
+
 def __setup__():
     try:
         os.makedirs(url_location)
