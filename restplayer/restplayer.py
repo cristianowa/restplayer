@@ -13,7 +13,10 @@ PORT = "Port"
 DIRECTORY = "Directory"
 DEFAULT_CFG_FILE = os.path.join(os.path.expanduser("~") + ".restplayerrc")
 DEBUG = "Debug"
-default_config = """[program:restplayer]
+OPTIONS="Options"
+PLAYER="player"
+DEFAULT_PLAYER = "mpg123"
+default_supervisor_config = """[program:restplayer]
 command=COMMANDLINE
 user=USER
 autostart=true
@@ -29,7 +32,7 @@ class UserConfig:
         self.debug = False
         self.userConfigFile = os.path.join(os.path.expanduser("~"), ".restplayerrc")
         self.directory = os.path.join(os.path.expanduser("~"), ".restplayer")
-
+        self.player = DEFAULT_PLAYER
     def read(self):
         if not os.path.exists(self.userConfigFile):
             return
@@ -39,6 +42,10 @@ class UserConfig:
         self.port = int(cfg.get(NETWORK, PORT))
         self.debug = bool(cfg.get(NETWORK, DEBUG))
         self.directory = cfg.get(DIRECTORIES, DIRECTORY)
+        try:
+            self.player = cfg.get(OPTIONS, PLAYER)
+        except:
+            self.player = DEFAULT_PLAYER
 
     def write(self):
         cfg = ConfigParser.ConfigParser()
@@ -48,6 +55,8 @@ class UserConfig:
         cfg.set(NETWORK, DEBUG, self.debug)
         cfg.add_section(DIRECTORIES)
         cfg.set(DIRECTORIES, DIRECTORY, self.directory)
+        cfg.add_section(OPTIONS)
+        cfg.set(OPTIONS, PLAYER, self.player)
         with open(self.userConfigFile, "w") as f:
             cfg.write(f)
 
@@ -68,7 +77,7 @@ def first_run(userCfg):
         cmd("echo " + psw + " | sudo -S touch /etc/supervisor/conf.d/restplayer.conf")
         cmd("echo " + psw + " | sudo -S chown " + getpass.getuser() + " /etc/supervisor/conf.d/restplayer.conf")
         with open("/etc/supervisor/conf.d/restplayer.conf", "w") as f:
-            cfg = default_config
+            cfg = default_supervisor_config
             current_path = os.path.abspath(inspect.getfile(inspect.currentframe()))
             cfg = cfg.replace("COMMANDLINE", current_path)
             cfg = cfg.replace("USER", getpass.getuser())
@@ -88,6 +97,7 @@ if __name__ == '__main__':
     parser.add_argument("--first-run", help="Configuration walkthrough", dest="first", action="store_true")
     parser.add_argument("--daemon", help="Fork and stay at background", dest="daemon", action="store_true")
     parser.add_argument("--config-file", help="Use different config file", dest="cfg", default=None)
+    parser.add_argument("--player", help="Player to be used", dest="player", default=DEFAULT_PLAYER)
     args = parser.parse_args()
 
     if args.dryrun:
@@ -97,9 +107,11 @@ if __name__ == '__main__':
     userConfig.ip = args.bind
     userConfig.port = args.port
     userConfig.debug = bool(args.debug)
+    userConfig.player = args.player
     import config
 
     config.base_dir = userConfig.directory
+    config.player_choice = userConfig.player
     if args.first:
         first_run(userConfig)
         sys.exit(0)
