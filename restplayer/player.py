@@ -1,13 +1,16 @@
 import config
-from vlc import  MediaPlayer, MediaListPlayer, MediaList
+
 
 NOTFOUND = "Not Found"
 
 import subprocess
 import signal
+from commands import getstatusoutput as cmd
 
 class Mpg123Player:
     def __init__(self):
+        ret, val = cmd("which mpg123")
+        assert(ret == 0, "Mpg123 not available")
         self.p = None
         self.list = None
     def __del__(self):
@@ -42,6 +45,8 @@ class Mpg123Player:
     def is_playing(self):
         return self.p is not None
 
+
+from vlc import  MediaPlayer, MediaListPlayer, MediaList
 class VlcPlayer:
     def __init__(self):
         self.player = None
