@@ -1,129 +1,254 @@
 ﻿<!DOCTYPE html>
 <html>
-	<head>
-		<title>Append block</title>
-		<meta content="text/html; charset=utf-8" http-equiv="content-type">
-		<meta name="description" content="Append block" />
-		<meta name="keywords" content="javascript, dynamic, grid, layout, jquery plugin, flex layouts"/>
-		<link rel="icon" href="favicon.ico" type="image/x-icon" />
-		<link rel="stylesheet" type="text/css" href="style.css" />
-		<script type="text/javascript" src="jquery-1.11.3.min.js"></script>
-		<script type="text/javascript" src="freewall.js"></script>
-		<style type="text/css">
-			.free-wall {
-				margin: 15px;
-			}
-			.add-more {
-				margin: 15px;
-			}
-		</style>
-	</head>
-	<body>
-		<div class='header'>
-			<div class="clearfix">
-				<div class="float-left">
-						<h1><a href="http://vnjs.net/www/project/freewall/">Free Wall</a></h1>
-						<div class='target'>Creating dynamic grid layouts.</div>
-				</div>
-			</div>
-		</div>
-		<div id="freewall" class="free-wall">
+<head>
+    <title>Rest Player</title>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <meta name="description" content="Append block"/>
+    <meta name="keywords" content="javascript, dynamic, grid, layout, jquery plugin, flex layouts"/>
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <script type="text/javascript" src="jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="freewall.js"></script>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="font-awesome.min.css">
+    <style type="text/css">
+        .free-wall {
+            margin: 15px;
+        }
 
-		</div>
-		<script type="text/javascript">
+        .add-more {
+            margin: 15px;
+        }
 
-			var colour = [
-				"rgb(142, 68, 173)",
-				"rgb(243, 156, 18)",
-				"rgb(211, 84, 0)",
-				"rgb(0, 106, 63)",
-				"rgb(41, 128, 185)",
-				"rgb(192, 57, 43)",
-				"rgb(135, 0, 0)",
-				"rgb(39, 174, 96)"
-			];
+        body {
+            background-color: lightgrey;
+        }
 
-			$(".brick").each(function() {
-				this.style.backgroundColor =  colour[colour.length * Math.random() << 0];
-			});
-            function playing_queue() {
-                return $.getJSON("/stage", {})};
+        ​ul {
+            list-style-type: none;
+        }
 
-            function available() {
-                 return $.getJSON("/player/available", {})};
+        li {
+            list-style: none;
+            color: white;
+            padding-left: 5%;
+        }
+
+        a {
+            color: white;
+        }
+
+        a:visited {
+            color: lightgray;
+        }
+
+        a:hover {
+            color: gold;
+        }
+
+        h3 {
+            color: lightcyan;
+        }
+
+        h1 {
+            color: lightcyan;
+        }
+
+        .button {
+            font: menu;
+            color: ButtonText;
+            display: inline-block;
+            width: 110px;
+            height: 110px;
+        }
+
+        .center {
+            position: center;
+            text-align: center;
+
+        }
+    </style>
+</head>
+<body>
+<div class='header'>
+    <div class="clearfix">
+        <div class="float-left">
+            <h1><a href="https://github.com/cristianowa/restplayer">RestPlayer</a></h1>
+
+            <div class='target' style="font-size: 140%;">A seamless http remote player.</div>
+        </div>
+    </div>
+    <div class="center" id="master">
+        <p>
+
+        <form action=/player/prev method="put" style="display: inline;">
+            <button class="btn large" title="Previus" type="submit" name="previus">
+                <i class="fa fa-backward fa-5x"/> </i> </button>
+        </form>
+
+        <form action=/player/play method="put" style="display: inline;">
+            <button class="btn large" title="Play" type="submit" name="play">
+                <i class="fa fa-play fa-5x"/> </i> </button>
+            </button>
+        </form>
+
+        <form action=/player/pause method="put" style="display: inline;">
+            <button class="btn large" title="Pause" type="submit" name="pause">
+                <i class="fa fa-pause fa-5x"/> </i> </button>
+            </button>
+        </form>
+
+        <form action=/player/next method="put" style="display: inline;">
+            <button class="btn btn-large" title="Next" type="submit" name="next">
+                <i class="fa fa-forward fa-5x"/> </i> </button>
+            </button>
+        </form>
+
+        <form action=/player/stop method="put" style="display: inline;">
+            <button class="btn btn-large" title="Stop" type="submit" name="stop">
+                <i class="fa fa-stop fa-5x"/> </i> </button>
+            </button>
+        </form>
+        </p>
+        <div>
+            <a href="/upload/music/" >
+                <i class="fa fa-cloud-upload fa-3x" title="Upload audio" ></i>
+            </a>
+            <a href="/control/directory/">
+                <i class="fa fa-eject fa-3x" title="Add new directory"></i>
+            </a>
+
+            <a href="/stage/save/">
+                <i class="fa fa-save fa-3x" title="Save queue to playlist"></i>
+            </a>
+
+            <a href="/stage/addshuffle">
+                <i class="fa fa-random fa-3x" title="Add all media randomized"></i>
+            </a>
+
+            <a href="/stage/clear/">
+                <i class="fa fa-eraser fa-3x" title="Erase play queue"></i>
+            </a>
+
+            <a href="/volume/down">
+                <i class="fa fa-volume-down fa-3x" title="Volume down"></i>
+            </a>
+
+            <a href="/volume/up">
+                <i class="fa fa-volume-up fa-3x" title="Volume up"></i>
+            </a>
+
+            <a href="/volume/off">
+                <i class="fa fa-volume-off fa-3x" title="Volume off"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<div id="freewall" class="free-wall">
+
+</div>
+<script type="text/javascript">
+
+    var colour = [
+        //		"rgb(142, 68, 173)",
+        //		"rgb(243, 156, 18)",
+        //			"rgb(211, 84, 0)",
+        "rgb(48, 136, 133)",
+        //		"rgb(41, 128, 185)",
+        //	"rgb(192, 57, 43)",
+        "rgb(57,66,64)",
+        //		"rgb(39, 174, 96)"
+    ];
+
+    $(".brick").each(function () {
+        this.style.backgroundColor = colour[colour.length * Math.random() << 0];
+    });
+    function playing_queue() {
+        return $.getJSON("/stage", {})
+    }
+    ;
+
+    function available() {
+        return $.getJSON("/player/available", {})
+    }
+    ;
 
 
-			$(function() {
-				var wall = new Freewall("#freewall");
-				wall.reset({
-					selector: '.brick',
-					animate: true,
-					cellW: 160,
-					cellH: 160,
-					delay: 50,
-					onResize: function() {
-						wall.fitWidth();
-					}
-				});
-				wall.fitWidth();
+    $(function () {
+        var wall = new Freewall("#freewall");
+        wall.reset({
+            selector: '.brick',
+            animate: true,
+            cellW: 160,
+            cellH: 160,
+            delay: 50,
+            onResize: function () {
+                wall.fitWidth();
+            }
+        });
+        wall.fitWidth();
 
-                playing_queue().done( function(data) {
-		    		var html = '<div class="brick {size}" style="background-color: {color}"><div class="cover">{cover}</div>{content}</div>';
+        playing_queue().done(function (data) {
+            var html = '<div class="brick {size}" style="background-color: {color}"><div class="cover">{cover}</div>{content}</div>';
 
-                    html = html.replace('{cover}',"<h1 >Playing Queue</h1><p><a href='/stage/shuffle'>" +
-					    "<i style= class='fa fa-random fa-1x' title=\" Randomize\"></i></a>");
-                    var content = "<ul>";
-                    var items = [];
-                    $.each(data, function (key, val) {
-                    if (key == "queue") {
-                        items = val;
-                        }
-                    });
+            html = html.replace('{cover}', "<h1 >Playing Queue</h1><p><a href='/stage/shuffle'>" +
+                    "<i style= class='fa fa-random fa-1x' title=\" Randomize\"></i></a>");
+            var content = "<ul>";
+            var items = [];
+            $.each(data, function (key, val) {
+                if (key == "queue") {
+                    items = val;
+                }
+            });
 
-                    for (var i = 0; i < items.length; i++) {
-                        content += "<li>" + items[i] + "</li>";
-                    };
+            for (var i = 0; i < items.length; i++) {
+                content += "<li>" + items[i] + "</li>";
+            }
+            ;
 
-                    content += "</ul>";
-                    html = html.replace('{content}', content);
-                    //var size = "size33 size32 size31 size23 size22 size21 size13 size12 size11".split(" ");
-				    html = html.replace('{size}', 'size33')
-								.replace('{color}', colour[colour.length * Math.random() << 0]);
-                    wall.appendBlock(html);
-                 });
-
-
-                available().done( function (data) {
-                    var divs = [];
-                    $.each(data, function (key, val) {
-                        header = "<h3>" + key.split("/").pop() +
-                               "</h3><a href='/stage/adddir/{url}'>" +
-                               " <i class=\"fa fa-plus-square fa-1x\" title=\" {key}></i></a>" +
-                               "</h3><a href='/stage/addshuffle/{key_url}'>" +
-                               " <i class=\"fa fa-random fa-1x\" title=\" {key}\"></i></a>";
-                        body = "<ul> {content}</ul> "
-                        url = key.split("/").join("_");
-                        key_url = key.split("/").join("_")
-                        content = ""
-                        for (var i = 0; i < val.length; i++) {
-                            content += "<li> <a href='/stage/add/{valurl}'>{valname}</a></li>"
-                                    .replace('{valurl}', val[i])
-                                    .replace('{valname}', val[i]);
-                        }
-                        var html = '<div class="brick {size}" style="background-color: {color}"><div class="cover">{cover}</div>{content}</div>';
-                        html = html.replace('{size}', 'size33')
-								.replace('{color}', colour[colour.length * Math.random() << 0]);
-                        wall.appendBlock(html.replace('{cover}', header).replace('{content}', content));
-                    });
-
-                });
+            content += "</ul>";
+            html = html.replace('{content}', content);
+            //var size = "size33 size32 size31 size23 size22 size21 size13 size12 size11".split(" ");
+            html = html.replace('{size}', 'size33')
+                    .replace('{color}', colour[colour.length * Math.random() << 0]);
+            wall.appendBlock(html);
+        });
 
 
-                $(".add-more").click(function() {
-                    var temp = '<div class="brick {size}" style="background-color: {color}"><div class="cover">{cover}</div>{content}</div>';
-				})
-			});
-			
-		</script>
-	</body>
+        available().done(function (data) {
+            var divs = [];
+            $.each(data, function (key, val) {
+                header = "<h3>" + key.split("/").pop() +
+                        "</h3><a href='/stage/adddir/{url}'>" +
+                        " <i class=\"fa fa-plus-square fa-1x\" title=\" {key}></i></a>" +
+                        "</h3><a href='/stage/addshuffle/{key_url}'>" +
+                        " <i class=\"fa fa-random fa-1x\" title=\" {key}\"></i></a>";
+                body = "<ul> {content}</ul> "
+                url = key.split("/").join("_");
+                key_url = key.split("/").join("_")
+                content = "";
+                max_length = 0;
+                for (var i = 0; i < val.length; i++) {
+                    max_length = Math.max(val[i].length, max_length);
+                    content += "<li> <a href='/stage/add/{valurl}'>{valname}</a></li>"
+                            .replace('{valurl}', val[i])
+                            .replace('{valname}', val[i]);
+                }
+                var html = '<div class="brick " style="background-color: {color}"><div class="cover">{cover}</div>{content}</div>';
+
+                html = html//.replace('{size}', 'size33')
+                        .replace('{color}', colour[colour.length * Math.random() << 0]);
+                wall.appendBlock(html.replace('{cover}', header).replace('{content}', content));
+            });
+
+        });
+
+
+        $(".add-more").click(function () {
+            var temp = '<div class="brick {size}" style="background-color: {color}"><div class="cover">{cover}</div>{content}</div>';
+        })
+    });
+
+</script>
+</body>
 </html>
