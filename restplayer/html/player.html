@@ -219,15 +219,19 @@
             var divs = [];
             $.each(data, function (key, val) {
                 header = "<h3>" + key.split("/").pop() +
-                        "</h3><a href='/stage/adddir/{url}'>" +
-                        " <i class=\"fa fa-plus-square fa-1x\" title=\" {key}></i></a>" +
+                        "</h3><a href='/stage/adddir/{key_url}'>" +
+                        " <i class=\"fa fa-plus-square fa-1x\" title='{key}'></i></a>" +
                         "</h3><a href='/stage/addshuffle/{key_url}'>" +
-                        " <i class=\"fa fa-random fa-1x\" title=\" {key}\"></i></a>";
+                        " <i class=\"fa fa-random fa-1x\" title='{key}'></i></a>";
                 body = "<ul> {content}</ul> "
                 url = key.split("/").join("_");
                 key_url = key.split("/").join("_")
+                header = header.replace("{key}",key)
+                        .replace("{url}",url)
+                        .replace("{key_url}",key_url);
                 content = "";
                 max_length = 0;
+
                 for (var i = 0; i < val.length; i++) {
                     max_length = Math.max(val[i].length, max_length);
                     content += "<li> <a href='/stage/add/{valurl}'>{valname}</a></li>"
