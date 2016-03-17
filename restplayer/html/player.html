@@ -62,6 +62,20 @@
             height: 110px;
         }
 
+        .tile {
+            display: inline-block;
+            float: left;
+            position: center;
+            margin: 3px;
+        }
+
+        .container {
+            display: inline-block;
+            width: 42%;
+            position: center;
+            margin: 10px;
+        }
+
         .center {
             position: center;
             text-align: center;
@@ -110,35 +124,35 @@
             </button>
         </form>
         </p>
-        <div>
-            <a href="/upload/music/" >
+        <div class="container">
+            <a href="/upload/music/" class="tile">
                 <i class="fa fa-cloud-upload fa-3x" title="Upload audio" ></i>
             </a>
-            <a href="/control/directory/">
+            <a href="/control/directory/" class="tile">
                 <i class="fa fa-eject fa-3x" title="Add new directory"></i>
             </a>
 
-            <a href="/stage/save/">
+            <a href="/stage/save/" class="tile">
                 <i class="fa fa-save fa-3x" title="Save queue to playlist"></i>
             </a>
 
-            <a href="/stage/addshuffle">
+            <a href="/stage/addshuffle" class="tile">
                 <i class="fa fa-random fa-3x" title="Add all media randomized"></i>
             </a>
 
-            <a href="/stage/clear/">
+            <a href="/stage/clear/" class="tile">
                 <i class="fa fa-eraser fa-3x" title="Erase play queue"></i>
             </a>
 
-            <a href="/volume/down">
+            <a href="/volume/down" class="tile">
                 <i class="fa fa-volume-down fa-3x" title="Volume down"></i>
             </a>
 
-            <a href="/volume/up">
+            <a href="/volume/up" class="tile">
                 <i class="fa fa-volume-up fa-3x" title="Volume up"></i>
             </a>
 
-            <a href="/volume/off">
+            <a href="/volume/off" class="tile">
                 <i class="fa fa-volume-off fa-3x" title="Volume off"></i>
             </a>
         </div>
