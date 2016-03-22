@@ -205,8 +205,8 @@
         playing_queue().done(function (data) {
             var html = '<div class="brick {size}" style="background-color: {color}"><div class="cover">{cover}</div>{content}</div>';
 
-            html = html.replace('{cover}', "<h1 >Playing Queue</h1><p><a href='/stage/shuffle'>" +
-                    "<i style= class='fa fa-random fa-1x' title=\" Randomize\"></i></a>");
+            html = html.replace('{cover}', "<h1>Playing Queue</h1><p><a href='/stage/shuffle'>" +
+                    "<i class=\"fa fa-random fa-1x\" title=\" Randomize\"></i></a>");
             var content = "<ul>";
             var items = [];
             $.each(data, function (key, val) {
@@ -240,9 +240,9 @@
                 body = "<ul> {content}</ul> "
                 url = key.split("/").join("_");
                 key_url = key.split("/").join("_")
-                header = header.replace("{key}",key)
-                        .replace("{url}",url)
-                        .replace("{key_url}",key_url);
+                header = header.replace(new RegExp("{key}", 'g'),key)
+                        .replace(new RegExp("{url}"),url)
+                        .replace(new RegExp("{key_url}", 'g'),key_url);
                 content = "";
                 max_length = 0;
 
@@ -252,11 +252,17 @@
                             .replace('{valurl}', val[i])
                             .replace('{valname}', val[i]);
                 }
-                var html = '<div class="brick " style="background-color: {color}"><div class="cover">{cover}</div>{content}</div>';
+                var html = '<div class="brick" style="background-color:{color}; width:{width}px; height:{height}px">' +
+                        '<div class="cover">{cover}</div>{content}</div>';
+                width = max_length * 6;
+                height = val.length * 6;
+                html = html.replace('{width}', width)
+                        .replace('{heigth}', height)
+                        .replace('{color}', colour[colour.length * Math.random() << 0])
+                        .replace('{cover}', header)
+                        .replace('{content}', content);
 
-                html = html//.replace('{size}', 'size33')
-                        .replace('{color}', colour[colour.length * Math.random() << 0]);
-                wall.appendBlock(html.replace('{cover}', header).replace('{content}', content));
+                wall.appendBlock(html);
             });
 
         });
