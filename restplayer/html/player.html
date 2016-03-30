@@ -197,9 +197,11 @@
             cellH: 160,
             delay: 50,
             onResize: function () {
-                wall.fitWidth();
+                //wall.fitWidth();
+                wall.fitHeight();
             }
         });
+        //wall.fitWidth();
         wall.fitWidth();
 
         playing_queue().done(function (data) {
@@ -252,15 +254,22 @@
                             .replace('{valurl}', val[i])
                             .replace('{valname}', val[i]);
                 }
-                var html = '<div class="brick" style="background-color:{color}; width:{width}px; height:{height}px">' +
+                var html = '<div class="brick {size}" style="background-color:{color}; ">' +
                         '<div class="cover">{cover}</div>{content}</div>';
-                width = max_length * 6;
-                height = val.length * 6;
-                html = html.replace('{width}', width)
-                        .replace('{heigth}', height)
-                        .replace('{color}', colour[colour.length * Math.random() << 0])
+				if (val.length > 32)  {
+					new_size =  "size36";
+				} else {
+				if (val.length > 16 ) {
+					new_size =  "size35";
+				} else {
+					new_size = "size33";
+				}}
+
+			
+                html = html.replace('{color}', colour[colour.length * Math.random() << 0])
                         .replace('{cover}', header)
-                        .replace('{content}', content);
+                        .replace('{content}', content)
+						.replace('{size}', new_size);
 
                 wall.appendBlock(html);
             });
