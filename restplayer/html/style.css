@@ -287,6 +287,18 @@ table {
 	height: 960px;
 }
 
+.size66 {
+	width: 480px;
+	height: 1920px;
+}
+
+
+.size96 {
+	width: 480px;
+	height: 2920px;
+}
+
+
 .donate form {
 	height: 100%;
 	width: 100%;

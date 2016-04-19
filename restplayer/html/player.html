@@ -171,6 +171,7 @@
         //		"rgb(41, 128, 185)",
         //	"rgb(192, 57, 43)",
         "rgb(57,66,64)",
+        "rgb(170, 136, 48)",
         //		"rgb(39, 174, 96)"
     ];
 
@@ -204,6 +205,24 @@
         //wall.fitWidth();
         wall.fitWidth();
 
+        $.getJSON("/player/current", function (data) {
+            var current = "";
+            $.each(data, function (key, val) {
+                if (key == "current") {
+                    current = val
+                }
+            });
+            var html = '<div class="brick {size}" style="background-color: {color}">' +
+                    '<div class="cover">{cover}</div><h2 style="text-align: center;">{content}</h2></div>';
+            html = html.replace("{cover}","<h1 style=\"text-align: center;\">Current playing</h1>")
+                    .replace("{content}",current)
+                    .replace("{color}", colour[2])
+                    .replace("{size}", "size31");
+
+            wall.appendBlock(html);
+        });
+
+
         playing_queue().done(function (data) {
             var html = '<div class="brick {size}" style="background-color: {color}"><div class="cover">{cover}</div>{content}</div>';
 
@@ -225,7 +244,24 @@
             content += "</ul>";
             html = html.replace('{content}', content);
             //var size = "size33 size32 size31 size23 size22 size21 size13 size12 size11".split(" ");
-            html = html.replace('{size}', 'size33')
+			new_size = 'size33';
+            if (items.length > 64) {
+
+                new_size = "size96";
+            } else {
+                if (items.length > 48) {
+                    new_size = "size66";
+                } else {
+                    if (items.length > 32) {
+                        new_size = "size36";
+                    } else {
+                        if (items.length > 16) {
+                            new_size = "size35";
+                        }
+                    }
+                }
+            }
+            html = html.replace('{size}', new_size)
                     .replace('{color}', colour[colour.length * Math.random() << 0]);
             wall.appendBlock(html);
         });
