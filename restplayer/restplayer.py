@@ -65,6 +65,9 @@ userConfig = UserConfig()
 import getpass
 
 
+def sudo(psw, command):
+    return cmd("echo " + psw + " | sudo -S " + command)
+
 def first_run(userCfg):
     x = raw_input("Would you like to install supervisor and supervisor entry ? (y/N) ")
     psw = getpass.getpass()
@@ -74,8 +77,8 @@ def first_run(userCfg):
             print "Error installing supervisor - aborting"
             print "[" + ret + "]"
             return
-        cmd("echo " + psw + " | sudo -S touch /etc/supervisor/conf.d/restplayer.conf")
-        cmd("echo " + psw + " | sudo -S chown " + getpass.getuser() + " /etc/supervisor/conf.d/restplayer.conf")
+        sudo(psw, "touch /etc/supervisor/conf.d/restplayer.conf")
+        sudo(psw, "chown " + getpass.getuser() + " /etc/supervisor/conf.d/restplayer.conf")
         with open("/etc/supervisor/conf.d/restplayer.conf", "w") as f:
             cfg = default_supervisor_config
             current_path = os.path.abspath(inspect.getfile(inspect.currentframe()))
@@ -83,8 +86,22 @@ def first_run(userCfg):
             cfg = cfg.replace("USER", getpass.getuser())
             f.write(cfg)
     userConfig.write()
-    cmd("supervisorctl reload")
-    cmd("supervisorctl restart restplayer")
+    sts, ret = cmd("supervisorctl reload")
+    if ret != 0:
+        print "Error loading supervisor, trying as root"
+        sts, ret = sudo(psw, "supervisorctl reload")
+        if ret != 0:
+            print "Error also with root[ " + sts + "]"
+            return
+
+    sts, ret = cmd("supervisorctl restart restplayer")
+    if ret != 0:
+        print "Error running supervisor, trying as root"
+        sts, ret = sudo(psw, "supervisorctl restart restplayer")
+        if ret != 0:
+            print "Error also with root[ " + sts + "]"
+            return
+
 
 
 if __name__ == '__main__':
