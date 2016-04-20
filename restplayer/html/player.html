@@ -1,18 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>Rest Player</title>
-    <script src="jquery-1.11.3.min.js"></script>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <meta name="description" content="Append block"/>
+    <meta name="keywords" content="javascript, dynamic, grid, layout, jquery plugin, flex layouts"/>
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <script type="text/javascript" src="jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="freewall.js"></script>
     <link rel="stylesheet" href="bootstrap.min.css">
     <link rel="stylesheet" href="font-awesome.min.css">
-    <style>
+    <style type="text/css">
+        .free-wall {
+            margin: 15px;
+        }
+
+        .add-more {
+            margin: 15px;
+        }
+
         body {
             background-color: lightgrey;
         }
 
+        ​ul {
+            list-style-type: none;
+        }
+
+        li {
+            list-style: none;
+            color: white;
+            padding-left: 5%;
+        }
+
+        a {
+            color: white;
+        }
+
+        a:visited {
+            color: lightgray;
+        }
+
+        a:hover {
+            color: gold;
+        }
+
+        h3 {
+            color: lightcyan;
+        }
+
         h1 {
-            color: blue;
+            color: lightcyan;
         }
 
         .button {
@@ -23,28 +62,18 @@
             height: 110px;
         }
 
-        .image {
-            width: 96px;
-            height: 96px;
+        .tile {
+            display: inline-block;
+            float: left;
+            position: center;
+            margin: 3px;
         }
 
-        .node rect {
-            cursor: pointer;
-            fill: #fff;
-            fill-opacity: .5;
-            stroke: #000000;
-            stroke-width: 1.5px;
-        }
-
-        .node text {
-            font: 10px sans-serif;
-            pointer-events: none;
-        }
-
-        path.link {
-            fill: none;
-            stroke: #000000;
-            stroke-width: 1.5px;
+        .container {
+            display: inline-block;
+            width: 42%;
+            position: center;
+            margin: 10px;
         }
 
         .center {
@@ -52,163 +81,272 @@
             text-align: center;
 
         }
-
-        ​ul  {
-        list-style-type: none;
-        }
-
-        li {
-            list-style: none;
-        }
-
-        #playqueue {
-            border-radius: 25px;
-            border: 2px solid #212121;
-            background: #204d74;
-            color: #ffffff;
-            padding: 20px;
-            position: center;
-            text-align: center;
-            width: 500px;
-            height: 150px;
-            float:left;
-
-        }
-
-
-        #directory {
-            border-radius: 25px;
-            border: 2px solid #212121;
-            padding: 20px;
-            position: center;
-            text-align: center;
-            width: 500px;
-            height: 150px;
-            float:left;
-
-        }
-
     </style>
 </head>
 <body>
-<div class="center" id="master">
-    <p>
+<div class='header'>
+    <div class="clearfix">
+        <div class="float-left">
+            <h1><a href="https://github.com/cristianowa/restplayer">RestPlayer</a></h1>
 
-    <form action=/player/prev method="put" style="display: inline;">
-        <button class="btn large" title="Previus" type="submit" name="previus">
-            <i class="fa fa-backward fa-5x"/> </i> </button>
-    </form>
+            <div class='target' style="font-size: 140%;">A seamless http remote player.</div>
+        </div>
+    </div>
+    <div class="center" id="master">
+        <p>
 
-    <form action=/player/play method="put" style="display: inline;">
-        <button class="btn large" title="Play" type="submit" name="play">
-            <i class="fa fa-play fa-5x"/> </i> </button>
-        </button>
-    </form>
 
-    <form action=/player/pause method="put" style="display: inline;">
-        <button class="btn large" title="Pause" type="submit" name="pause">
-            <i class="fa fa-pause fa-5x"/> </i> </button>
-        </button>
-    </form>
-
-    <form action=/player/next method="put" style="display: inline;">
-        <button class="btn btn-large" title="Next" type="submit" name="next">
-            <i class="fa fa-forward fa-5x"/> </i> </button>
-        </button>
-    </form>
-
-    <form action=/player/stop method="put" style="display: inline;">
-        <button class="btn btn-large" title="Stop" type="submit" name="stop">
-            <i class="fa fa-stop fa-5x"/> </i> </button>
-        </button>
-    </form>
-    </p>
-    <div>
-        <a href="/upload/music/">
-            <i class="fa fa-cloud-upload fa-3x" title="Upload audio"></i>
-        </a>
-
-        <a href="/control/directory/">
-            <i class="fa fa-eject fa-3x" title="Add new directory"></i>
-        </a>
-
-        <a href="/stage/save/">
-            <i class="fa fa-save fa-3x" title="Save queue to playlist"></i>
-        </a>
-
-        <a href="/stage/addshuffle">
-            <i class="fa fa-random fa-3x" title="Add all media randomized"></i>
-        </a>
-
-        <a href="/stage/clear/">
-            <i class="fa fa-eraser fa-3x" title="Erase play queue"></i>
-        </a>
-
-        <a href="/volume/down">
-            <i class="fa fa-volume-down fa-3x" title="Volume down"></i>
-        </a>
-
-        <a href="/volume/up">
-            <i class="fa fa-volume-up fa-3x" title="Volume up"></i>
-        </a>
-
-        <a href="/volume/off">
-            <i class="fa fa-volume-off fa-3x" title="Volume off"></i>
-        </a>
+        </p>
+        <div class="container">
+        </div>
     </div>
 </div>
-<div class="center" id="master">
+<div id="freewall" class="free-wall">
+
 </div>
+<script type="text/javascript">
 
-<script>
-    $.getJSON("/player/current", function (data) {
-        var current = "";
-        $.each(data, function (key, val) {
-              if (key == "current") {
-                current = val
-            }
-        });
-        var html = "<h1>Current playing</h1>";
-        html += "<h2>" + current + "</h2>";
-        html ="<ul class='list' id=\"queue\">" + html + "<ul/>";
-        document.getElementById("master").innerHTML += html;
+    var colour = [
+        //		"rgb(142, 68, 173)",
+        //		"rgb(243, 156, 18)",
+        //			"rgb(211, 84, 0)",
+        "rgb(48, 136, 133)",
+        //		"rgb(41, 128, 185)",
+        //	"rgb(192, 57, 43)",
+        "rgb(57,66,64)",
+        "rgb(170, 136, 48)",
+        //		"rgb(39, 174, 96)"
+    ];
+
+    $(".brick").each(function () {
+        this.style.backgroundColor = colour[colour.length * Math.random() << 0];
     });
-    $.getJSON("/stage", function (data) {
-        var items = [];
-        $.each(data, function (key, val) {
+    function playing_queue() {
+        return $.getJSON("/stage", {})
+    }
+    ;
 
-            if (key == "queue") {
-                items = val
+    function available() {
+        return $.getJSON("/player/available", {})
+    }
+    ;
+
+
+    $(function () {
+        var wall = new Freewall("#freewall");
+        wall.reset({
+            selector: '.brick',
+            animate: true,
+            cellW: 160,
+            cellH: 160,
+            delay: 50,
+            onResize: function () {
+                //wall.fitWidth();
+                wall.fitHeight();
             }
         });
-        var html = "<div id='playqueue' style='height: " + (140 + items.length * 25)+"px'><h1 style='color: #000000'>Playing Queue</h1>";
+        //wall.fitWidth();
+        wall.fitWidth();
 
-        html += "</h3><a href='/stage/shuffle'>" +
-                    " <i style='color: white' class=\"fa fa-random fa-1x\" title=\" Randomize\"></i></a>";
-        for (var i = 0; i < items.length; i++) {
-            html += "<li>" + items[i] + "</li>";
-        };
-        html ="<ul class='list' id=\"queue\">" + html + "<ul/></div>";
-        document.getElementById("master").innerHTML += html;
-    });
-
-    $.getJSON("/player/available", function (data) {
-        var divs = [];
-        $.each(data, function (key, val) {
-            html = "<div id='directory' style='height: " + (135 + val.length * 23)+"px'><li><h3>" + key.split("/").pop();
-            html += "</h3><a href='/stage/adddir/" + key.split("/").join("_") + "'>" +
-                    " <i class=\"fa fa-plus-square fa-1x\" title=\" " + key + "\"></i></a>";
-            html += "</h3><a href='/stage/addshuffle/" + key.split("/").join("_") + "'>" +
-                    " <i class=\"fa fa-random fa-1x\" title=\" " + key + "\"></i></a>";
-            html += "<ul>";
-
-            for (var i = 0; i < val.length; i++) {
-                html += "<li> <a href='/stage/add/" + val[i] + "'>" + val[i] + "</a></li>";
+        var html = '<div class="brick {size}" style="background-color: {color}"><div style="position: absolute;top: 25%; left: 2%; " id="controls"></div></div>'
+                .replace("{color}", colour[1])
+                .replace("{size}", "size31");
+         wall.appendBlock(html);
+        wallcontrols = new Freewall("#controls");
+        wallcontrols.reset({
+            selector: '.brick',
+            animate: true,
+            cellW: 30,
+            cellH: 30,
+            delay: 50,
+            onResize: function () {
+                //wall.fitWidth();
+                wall.fitHeight();
             }
-            html += "</ul></li></div>";
-            divs.push(html)
         });
-        document.getElementById("master").innerHTML += divs.join();
+        var brick = '<div id="controls" class="brick size2-2" style="background-color:rgb(57, 66, 64)">';
+        var prev =  brick +
+                '<form action=/player/prev method="put" style="display:inline;">' +
+                '<button class="btn large" title="Previus" type="submit" name="previus">' +
+                '<i class="fa fa-backward fa-4x"/> </i> </button></form> </div>';
+
+        var play = brick +'<form action=/player/play method="put" style="display:inline;">' +
+                '<button class="btn large" title="Play" type="submit" name="play">' +
+                '<i class="fa fa-play fa-4x"/> </i> </button></button></form> </div>';
+
+        var pause = brick +'<form action=/player/pause method="put" style="display:inline;">' +
+                '<button class="btn large" title="Pause" type="submit" name="pause">' +
+                '<i class="fa fa-pause fa-4x"/> </i> </button> </button> </form> </div>';
+
+        var next = brick +'<form action=/player/next method="put" style="display: inline;">' +
+                '<button class="btn btn-large" title="Next" type="submit" name="next">' +
+                '<i class="fa fa-forward fa-4x"/> </i> </button> </button> </form> </div>';
+
+        var stop = brick +'<form action=/player/stop method="put" style="display: inline;">' +
+                '<button class="btn btn-large" title="Stop" type="submit" name="stop">' +
+                '<i class="fa fa-stop fa-4x"/> </i> </button> </button> </form> </div>';
+        wallcontrols.appendBlock(prev);
+        wallcontrols.appendBlock(play);
+        wallcontrols.appendBlock(pause);
+        wallcontrols.appendBlock(next);
+        wallcontrols.appendBlock(stop);
+
+
+
+
+        var html = '<div class="brick {size}" style="background-color: {color}"><div style="position: absolute;top: 2%; left: 2%; " id="options"></div></div>'
+                .replace("{content}", "")
+                .replace("{color}", colour[1])
+                .replace("{size}", "size31");
+        wall.appendBlock(html);
+        var walloptions = new Freewall("#options");
+        walloptions.reset({
+            selector: '.brick',
+            animate: true,
+            cellW: 30,
+            cellH: 30,
+            delay: 50,
+            onResize: function () {
+                //wall.fitWidth();
+                wall.fitHeight();
+            }
+        });
+        var upload = brick + '<a href="/upload/music/" class="tile">' +
+                '<i class="fa fa-cloud-upload fa-3x" title="Upload audio" ></i></a></div>';
+        walloptions.appendBlock(upload);
+        var directory = brick + '<a href="/control/directory/" class="tile">' +
+                '<i class="fa fa-eject fa-3x" title="Add new directory"></i></a></div>';
+        walloptions.appendBlock(directory);
+        var save = brick + '<a href="/stage/save/" class="tile">' +
+                '<i class="fa fa-save fa-3x" title="Save queue to playlist"></i></a></div>';
+        walloptions.appendBlock(save);
+        var addshuffle = brick + '<a href="/stage/addshuffle" class="tile">' +
+                '<i class="fa fa-random fa-3x" title="Add all media randomized"></i></a></div>';
+        walloptions.appendBlock(addshuffle);
+        var erase = brick + '<a href="/stage/clear/" class="tile">' +
+                '<i class="fa fa-eraser fa-3x" title="Erase play queue"></i></a></div>';
+        walloptions.appendBlock(erase);
+        var vdown = brick + '<a href="/volume/down" class="tile">' +
+                '<i class="fa fa-volume-down fa-3x" title="Volume down"></i></a></div>';
+        walloptions.appendBlock(vdown);
+        var vup = brick + '<a href="/volume/up" class="tile">' +
+                '<i class="fa fa-volume-up fa-3x" title="Volume up"></i> </a></div>';
+        walloptions.appendBlock(vup);
+        var voff = brick +  '<a href="/volume/off" class="tile">' +
+                '<i class="fa fa-volume-off fa-3x" title="Volume off"></i></a></div>';
+        walloptions.appendBlock(voff);
+
+        $.getJSON("/player/current", function (data) {
+            var current = "";
+            $.each(data, function (key, val) {
+                if (key == "current") {
+                    current = val
+                }
+            });
+            var html = '<div class="brick {size}" style="background-color: {color}">' +
+                    '<div class="cover">{cover}</div><h2 style="text-align: center;">{content}</h2></div>';
+            html = html.replace("{cover}","<h1 style=\"text-align: center;\">Current playing</h1>")
+                    .replace("{content}",current)
+                    .replace("{color}", colour[1])
+                    .replace("{size}", "size31");
+
+            wall.appendBlock(html);
+        });
+
+
+        playing_queue().done(function (data) {
+            var html = '<div class="brick {size}" style="background-color: {color}"><div class="cover">{cover}</div>{content}</div>';
+
+            html = html.replace('{cover}', "<h1>Playing Queue</h1><p><a href='/stage/shuffle'>" +
+                    "<i class=\"fa fa-random fa-1x\" title=\" Randomize\"></i></a>");
+            var content = "<ul>";
+            var items = [];
+            $.each(data, function (key, val) {
+                if (key == "queue") {
+                    items = val;
+                }
+            });
+
+            for (var i = 0; i < items.length; i++) {
+                content += "<li>" + items[i] + "</li>";
+            }
+            ;
+
+            content += "</ul>";
+            html = html.replace('{content}', content);
+            //var size = "size33 size32 size31 size23 size22 size21 size13 size12 size11".split(" ");
+			new_size = 'size33';
+            if (items.length > 64) {
+
+                new_size = "size96";
+            } else {
+                if (items.length > 48) {
+                    new_size = "size66";
+                } else {
+                    if (items.length > 32) {
+                        new_size = "size36";
+                    } else {
+                        if (items.length > 16) {
+                            new_size = "size35";
+                        }
+                    }
+                }
+            }
+            html = html.replace('{size}', new_size)
+                    .replace('{color}', colour[colour.length * Math.random() << 0]);
+            wall.appendBlock(html);
+        });
+
+
+        available().done(function (data) {
+            var divs = [];
+            $.each(data, function (key, val) {
+                header = "<h3>" + key.split("/").pop() +
+                        "</h3><a href='/stage/adddir/{key_url}'>" +
+                        " <i class=\"fa fa-plus-square fa-1x\" title='{key}'></i></a>" +
+                        "</h3><a href='/stage/addshuffle/{key_url}'>" +
+                        " <i class=\"fa fa-random fa-1x\" title='{key}'></i></a>";
+                body = "<ul> {content}</ul> "
+                url = key.split("/").join("_");
+                key_url = key.split("/").join("_")
+                header = header.replace(new RegExp("{key}", 'g'),key)
+                        .replace(new RegExp("{url}"),url)
+                        .replace(new RegExp("{key_url}", 'g'),key_url);
+                content = "";
+                max_length = 0;
+
+                for (var i = 0; i < val.length; i++) {
+                    max_length = Math.max(val[i].length, max_length);
+                    content += "<li> <a href='/stage/add/{valurl}'>{valname}</a></li>"
+                            .replace('{valurl}', val[i])
+                            .replace('{valname}', val[i]);
+                }
+                var html = '<div class="brick {size}" style="background-color:{color}; ">' +
+                        '<div class="cover">{cover}</div>{content}</div>';
+				if (val.length > 32)  {
+					new_size =  "size36";
+				} else {
+				if (val.length > 16 ) {
+					new_size =  "size35";
+				} else {
+					new_size = "size33";
+				}}
+
+			
+                html = html.replace('{color}', colour[colour.length * Math.random() << 0])
+                        .replace('{cover}', header)
+                        .replace('{content}', content)
+						.replace('{size}', new_size);
+
+                wall.appendBlock(html);
+            });
+
+        });
+
+
+        $(".add-more").click(function () {
+            var temp = '<div class="brick {size}" style="background-color: {color}"><div class="cover">{cover}</div>{content}</div>';
+        })
     });
 
 </script>
