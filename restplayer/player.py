@@ -10,7 +10,7 @@ from commands import getstatusoutput as cmd
 class Mpg123Player:
     def __init__(self):
         ret, val = cmd("which mpg123")
-        assert(ret == 0, "Mpg123 not available")
+        assert ret == 0, "Mpg123 not available"
         self.p = None
         self.list = None
     def __del__(self):

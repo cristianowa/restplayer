@@ -62,6 +62,10 @@ class UserConfig:
 
 
 userConfig = UserConfig()
+try:
+    userConfig.read()
+except:
+    pass
 import getpass
 
 
@@ -114,7 +118,7 @@ if __name__ == '__main__':
     parser.add_argument("--first-run", help="Configuration walkthrough", dest="first", action="store_true")
     parser.add_argument("--daemon", help="Fork and stay at background", dest="daemon", action="store_true")
     parser.add_argument("--config-file", help="Use different config file", dest="cfg", default=None)
-    parser.add_argument("--player", help="Player to be used", dest="player", default=DEFAULT_PLAYER)
+    parser.add_argument("--player", help="Player to be used", dest="player", default=userConfig.player)
     args = parser.parse_args()
 
     if args.dryrun:
