@@ -94,16 +94,16 @@ def first_run(userCfg):
     if ret != 0:
         print "Error loading supervisor, trying as root"
         sts, ret = sudo(psw, "supervisorctl reload")
-        if ret != 0:
-            print "Error also with root[ " + sts + "]"
+        if sts != 0:
+            print "Error also with root[ " + str(ret) + "]"
             return
 
     sts, ret = cmd("supervisorctl restart restplayer")
     if ret != 0:
         print "Error running supervisor, trying as root"
         sts, ret = sudo(psw, "supervisorctl restart restplayer")
-        if ret != 0:
-            print "Error also with root[ " + sts + "]"
+        if sts != 0:
+            print "Error also with root[ " + str(ret) + "]"
             return
 
 
